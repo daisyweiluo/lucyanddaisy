@@ -126,6 +126,7 @@ while (count <= 200){
                                                 0,n,0,0, 
                                                 0,0,n,0, 
                                                 0,0,0,1);
+  
   length+=n;
   var transTailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2, 0,0,1,-length, 0,0,0,1);
   var LoopTailMatrix = new THREE.Matrix4().multiplyMatrices(transTailMatrix,scalTailMatrix);
