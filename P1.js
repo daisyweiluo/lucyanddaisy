@@ -89,7 +89,7 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 //tran first, rotation, last scale
 
 // MATRICES
-var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0, 0,0,0,1);
+var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
 var scalMatrix = new THREE.Matrix4().set(0.1,0,0,0, 0,0.1,0,0, 0,0,8,0, 0,0,0,1);
 var transMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2, 0,0,1,-8, 0,0,0,1);
 var tailMatrix=new THREE.Matrix4().multiplyMatrices(transMatrix,scalMatrix);
