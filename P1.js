@@ -71,13 +71,10 @@ function makeCube() {
 
 // GEOMETRY
 var torsoGeometry = makeCube();
-//var test = makeCube();
 
 var non_uniform_scale = new THREE.Matrix4().set(5,0,0,0, 0,5,0,0, 0,0,5,0, 0,0,0,1);
-//var sec_uniform_scale = new THREE.Matrix4().set(10,0,0,5, 0,10,0,8, 0,0,10,0, 0,0,0,1);
 
 torsoGeometry.applyMatrix(non_uniform_scale);
-//test.applyMatrix(sec_uniform_scale);
 
 // TO-DO: SPECIFY THE REST OF YOUR STAR-NOSE MOLE'S GEOMETRY. 
 // Note: You will be using transformation matrices to set the shape. 
@@ -89,11 +86,25 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 //tran first, rotation, last scale
 
 // MATRICES
-var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0, 0,0,0,1);
+var ANGLE = 45.0;
+var dg = Math.PI * ANGLE / 180.0; ;
+var torsotransMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0.75, 0,0,0,1);
 var scalMatrix = new THREE.Matrix4().set(0.1,0,0,0, 0,0.1,0,0, 0,0,0.1,0, 0,0,0,1);
-//var transMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2, 0,0,1,-2.7, 0,0,0,1);
-//var tailMatrix = new THREE.Matrix4().multiplyMatrices(transMatrix,scalMatrix);
+var rotMatrix = new THREE.Matrix4().set(1,0,0,0, 0,Math.cos(dg),Math.sin(-dg),0, 0,Math.sin(dg),Math.cos(dg),0, 0,0,0,1);
+var torsoMatrix = new THREE.Matrix4().multiplyMatrices(torsotransMatrix,rotMatrix);
 
+//LEGS
+var leftlegtransMatrix = new THREE.Matrix4().set(1,0,0,3, 0,1,0,1, 0,0,1,-1, 0,0,0,1);
+var rightlegtransMatrix = new THREE.Matrix4().set(1,0,0,-3, 0,1,0,1, 0,0,1,-1, 0,0,0,1);
+var legscalMatrix = new THREE.Matrix4().set(0.25,0,0,0, 0,0.5,0,0, 0,0,0.5,0, 0,0,0,1);
+
+var leftlegMatrix = new THREE.Matrix4().multiplyMatrices(leftlegtransMatrix,legscalMatrix);
+var rightlegMatrix = new THREE.Matrix4().multiplyMatrices(rightlegtransMatrix,legscalMatrix);
+
+//HEAD TO TORSO 
+var head2torsoscalMatrix = new THREE.Matrix4().set(1,0,0,0, 0,Math.sqrt(2),0,0, 0,0,1.3,0, 0,0,0,1);
+var head2torsotransMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,4, 0,0,0,1);
+var head2torsoMatrix = new THREE.Matrix4().multiplyMatrices(head2torsotransMatrix,head2torsoscalMatrix);
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -101,23 +112,35 @@ var scalMatrix = new THREE.Matrix4().set(0.1,0,0,0, 0,0.1,0,0, 0,0,0.1,0, 0,0,0,
 // Hint: Play around with the headTorsoMatrix values, what changes in the render? Why?         
 
 
-
 // CREATE BODY
 var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
-//var testnew = new THREE.Mesh(torsoGeometry,normalMaterial);
+//LEGS
+var leftleg = new THREE.Mesh(torsoGeometry,normalMaterial);
+var rightleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
-torso.setMatrix(torsoMatrix)
-//testnew.setMatrix(tailMatrix)
-//LoopTail.setMatrix(LoopTailMatrix);
+//HEAD TO TORSO
+var head2torso = new THREE.Mesh(torsoGeometry,normalMaterial);
+
+torso.setMatrix(torsoMatrix);
+leftleg.setMatrix(leftlegMatrix);
+rightleg.setMatrix(rightlegMatrix);
+head2torso.setMatrix(head2torsoMatrix);
 
 
 scene.add(torso);
+scene.add(leftleg);
+scene.add(rightleg);
+scene.add(head2torso);
 //scene.add(testnew);
 
+
+//TAIL
 var count = 1; 
 var length = 1;
+var ScalTailMatrixs =[];
+var TransTailMatrixs = [];
 //All the tail Matrix is stored here
-var tailMatrixs = [];
+//var tailMatrixs = [];
 //All the tail is stored here
 var tails = [];
 while (count <= 200){
@@ -126,12 +149,14 @@ while (count <= 200){
                                                 0,n,0,0, 
                                                 0,0,n,0, 
                                                 0,0,0,1);
-
-  
+  ScalTailMatrixs.push(scalTailMatrix);
   length+=n;
-  var transTailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2, 0,0,1,-length, 0,0,0,1);
+  var transTailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,1, 0,0,1,-length, 0,0,0,1);
+  TransTailMatrixs.push(transTailMatrix);
+
   var LoopTailMatrix = new THREE.Matrix4().multiplyMatrices(transTailMatrix,scalTailMatrix);
-  tailMatrixs.push(LoopTailMatrix);
+  //tailMatrixs.push(LoopTailMatrix);
+
   var LoopTail = new THREE.Mesh(torsoGeometry,normalMaterial);
   tails.push(LoopTail);
   LoopTail.setMatrix(LoopTailMatrix);
@@ -189,22 +214,22 @@ function updateBody() {
 
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame 
 
-      var rotateZ = new THREE.Matrix4().set(1,        0,         0,        0, 
-                                            0, Math.cos(-p),-Math.sin(-p), 0, 
-                                            0, Math.sin(-p), Math.cos(-p), 0,
-                                            0,        0,         0,        1);
+      var rotateZ = getRotMatrix(p,"x");
 
       var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
-      //var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(rotateZ,tailMatrix);
       
-      for(var index = 0; index < tailMatrixs.length; index++){
-        var LoopTailRot = new THREE.Matrix4().multiplyMatrices(rotateZ,tailMatrixs[index]);
+      for(var index = 0; index < tails.length; index++){
+        var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(rotateZ,TransTailMatrixs[index]);
+        var LoopTailRot = new THREE.Matrix4().multiplyMatrices(tailRotMatrix,ScalTailMatrixs[index]);
         tails[index].setMatrix(LoopTailRot);
       }
 
+
+      var head2torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(rotateZ,head2torsoMatrix);
+
       torso.setMatrix(torsoRotMatrix); 
-      //testnew.setMatrix(tailRotMatrix);
-      break
+      head2torso.setMatrix(head2torsoRotMatrix);
+      break;
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate   
@@ -213,6 +238,39 @@ function updateBody() {
     default:
       break;
   }
+}
+
+function getRotMatrix(p, str){
+  switch(str)
+  {case "x":
+  var obj = new THREE.Matrix4().set(1,        0,         0,        0, 
+                                            0, Math.cos(-p),-Math.sin(-p), 0, 
+                                            0, Math.sin(-p), Math.cos(-p), 0,
+                                            0,        0,         0,        1);
+  return obj;
+  break;
+
+  case "y":
+  var obj = new  THREE.Matrix4().set(Math.cos(-p),        0,         -Math.sin(-p),         0, 
+                                            0,        1,        0,                      0, 
+                                Math.sin(-p),         0,         Math.cos(-p),          0,
+                                            0,        0,         0,                     1);
+  return obj;
+  break;
+
+  case "z":
+  var obj = new  THREE.Matrix4().set(Math.cos(-p),       -Math.sin(-p),         0,        0, 
+                                 Math.sin(-p),       Math.cos(-p),          0,        0, 
+                                            0,                    0,        1,        0,
+                                            0,                    0,        0,        1);
+  return obj;
+  break;
+
+  default:
+  break;
+
+  }
+
 }
 
 // LISTEN TO KEYBOARD
