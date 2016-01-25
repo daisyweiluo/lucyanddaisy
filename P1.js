@@ -89,11 +89,10 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 //tran first, rotation, last scale
 
 // MATRICES
-var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0, 0,0,0,1);
+var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
 var scalMatrix = new THREE.Matrix4().set(0.1,0,0,0, 0,0.1,0,0, 0,0,8,0, 0,0,0,1);
 var transMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2, 0,0,1,-8, 0,0,0,1);
 var tailMatrix=new THREE.Matrix4().multiplyMatrices(transMatrix,scalMatrix);
-
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -104,13 +103,13 @@ var tailMatrix=new THREE.Matrix4().multiplyMatrices(transMatrix,scalMatrix);
 
 // CREATE BODY
 var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
-var testnew = new THREE.Mesh(torsoGeometry,normalMaterial);
+var tail = new THREE.Mesh(torsoGeometry,normalMaterial);
 
 torso.setMatrix(torsoMatrix)
-testnew.setMatrix(tailMatrix)
+tail.setMatrix(tailMatrix)
 
 scene.add(torso);
-scene.add(testnew);
+scene.add(tail);
 
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
@@ -170,7 +169,7 @@ function updateBody() {
       var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix,tailMatrix);
 
       torso.setMatrix(torsoRotMatrix); 
-      testnew.setMatrix(tailRotMatrix);
+      tail.setMatrix(tailRotMatrix);
       break
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
