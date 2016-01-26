@@ -86,7 +86,6 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 //tran first, rotation, last scale
 
 // MATRICES
-<<<<<<< HEAD
 
 var ANGLE = 45.0;
 var dg = Math.PI * ANGLE / 180.0; 
