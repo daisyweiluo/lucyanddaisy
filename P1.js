@@ -87,23 +87,35 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 
 // MATRICES
 var ANGLE = 45.0;
-var dg = Math.PI * ANGLE / 180.0; ;
-var torsotransMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0.75, 0,0,0,1);
+var dg = Math.PI * ANGLE / 180.0; 
+
+var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+var legMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+
+//var torsotransMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,0.75, 0,0,0,1);
 var scalMatrix = new THREE.Matrix4().set(0.1,0,0,0, 0,0.1,0,0, 0,0,0.1,0, 0,0,0,1);
 var rotMatrix = new THREE.Matrix4().set(1,0,0,0, 0,Math.cos(dg),Math.sin(-dg),0, 0,Math.sin(dg),Math.cos(dg),0, 0,0,0,1);
-var torsoMatrix = new THREE.Matrix4().multiplyMatrices(torsotransMatrix,rotMatrix);
+var RotatedtorsoMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotMatrix);
 
-//LEGS
-var leftlegtransMatrix = new THREE.Matrix4().set(1,0,0,3, 0,1,0,1, 0,0,1,-1, 0,0,0,1);
-var rightlegtransMatrix = new THREE.Matrix4().set(1,0,0,-3, 0,1,0,1, 0,0,1,-1, 0,0,0,1);
+//LEGS THIGHS
+var leftlegtransMatrix = new THREE.Matrix4().set(1,0,0,3, 0,1,0,-1, 0,0,1,-1, 0,0,0,1);
+var rightlegtransMatrix = new THREE.Matrix4().set(1,0,0,-3, 0,1,0,-1, 0,0,1,-1, 0,0,0,1);
 var legscalMatrix = new THREE.Matrix4().set(0.25,0,0,0, 0,0.5,0,0, 0,0,0.5,0, 0,0,0,1);
 
 var leftlegMatrix = new THREE.Matrix4().multiplyMatrices(leftlegtransMatrix,legscalMatrix);
 var rightlegMatrix = new THREE.Matrix4().multiplyMatrices(rightlegtransMatrix,legscalMatrix);
 
+//SMALL LEGS
+var leftsmllegtransMatrix = new THREE.Matrix4().set(1,0,0,3.5, 0,1,0,-2, 0,0,1,-1, 0,0,0,1);
+var rightsmllegtransMatrix = new THREE.Matrix4().set(1,0,0,-3.5, 0,1,0,-2, 0,0,1,-1, 0,0,0,1);
+var smllegscalMatrix = new THREE.Matrix4().set(0.2,0,0,0, 0,0.2,0,0, 0,0,0.2,0, 0,0,0,1);
+
+var leftsmllegMatrix = new THREE.Matrix4().multiplyMatrices(leftsmllegtransMatrix,smllegscalMatrix);
+var rightsmllegMatrix = new THREE.Matrix4().multiplyMatrices(rightsmllegtransMatrix,smllegscalMatrix);
+
 //HEAD TO TORSO 
 var head2torsoscalMatrix = new THREE.Matrix4().set(1,0,0,0, 0,Math.sqrt(2),0,0, 0,0,1.3,0, 0,0,0,1);
-var head2torsotransMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,2.5, 0,0,1,4, 0,0,0,1);
+var head2torsotransMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,3.2, 0,0,0,1);
 var head2torsoMatrix = new THREE.Matrix4().multiplyMatrices(head2torsotransMatrix,head2torsoscalMatrix);
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
@@ -118,40 +130,49 @@ var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 var leftleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var rightleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
+//SMALL LEGS
+var leftsmlleg = new THREE.Mesh(torsoGeometry,normalMaterial);
+var rightsmlleg = new THREE.Mesh(torsoGeometry,normalMaterial);
+
 //HEAD TO TORSO
 var head2torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 
-torso.setMatrix(torsoMatrix);
+torso.setMatrix(RotatedtorsoMatrix);
 leftleg.setMatrix(leftlegMatrix);
 rightleg.setMatrix(rightlegMatrix);
 head2torso.setMatrix(head2torsoMatrix);
+leftsmlleg.setMatrix(leftsmllegMatrix);
+rightsmlleg.setMatrix(rightsmllegMatrix);
 
 
 scene.add(torso);
 scene.add(leftleg);
 scene.add(rightleg);
 scene.add(head2torso);
+scene.add(leftsmlleg);
+scene.add(rightsmlleg);
+
 //scene.add(testnew);
 
 
 //TAIL
 var count = 1; 
-var length = 1;
+var initialpos = 10;
 var ScalTailMatrixs =[];
 var TransTailMatrixs = [];
 //All the tail Matrix is stored here
 //var tailMatrixs = [];
 //All the tail is stored here
 var tails = [];
-while (count <= 200){
+while (count <= 250){
   var n = 0.1*(1-0.01*count);
   var scalTailMatrix = new THREE.Matrix4().set(n,0,0,0, 
                                                 0,n,0,0, 
                                                 0,0,n,0, 
                                                 0,0,0,1);
   ScalTailMatrixs.push(scalTailMatrix);
-  length+=n;
-  var transTailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,1, 0,0,1,-length, 0,0,0,1);
+  initialpos+=n;
+  var transTailMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,-initialpos, 0,0,0,1);
   TransTailMatrixs.push(transTailMatrix);
 
   var LoopTailMatrix = new THREE.Matrix4().multiplyMatrices(transTailMatrix,scalTailMatrix);
@@ -217,17 +238,18 @@ function updateBody() {
       var rotateZ = getRotMatrix(p,"x");
 
       var torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoMatrix,rotateZ);
+      var RotatedtorsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix,rotMatrix);
       
       for(var index = 0; index < tails.length; index++){
-        var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(rotateZ,TransTailMatrixs[index]);
+        var tailRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix,TransTailMatrixs[index]);
         var LoopTailRot = new THREE.Matrix4().multiplyMatrices(tailRotMatrix,ScalTailMatrixs[index]);
         tails[index].setMatrix(LoopTailRot);
       }
 
 
-      var head2torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(rotateZ,head2torsoMatrix);
+      var head2torsoRotMatrix = new THREE.Matrix4().multiplyMatrices(torsoRotMatrix,head2torsoMatrix);
 
-      torso.setMatrix(torsoRotMatrix); 
+      torso.setMatrix(RotatedtorsoRotMatrix); 
       head2torso.setMatrix(head2torsoRotMatrix);
       break;
 
