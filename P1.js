@@ -86,6 +86,7 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 //tran first, rotation, last scale
 
 // MATRICES
+<<<<<<< HEAD
 
 var ANGLE = 45.0;
 var dg = Math.PI * ANGLE / 180.0; 
@@ -118,6 +119,7 @@ var rightsmllegMatrix = new THREE.Matrix4().multiplyMatrices(rightsmllegtransMat
 var head2torsoscalMatrix = new THREE.Matrix4().set(1,0,0,0, 0,Math.sqrt(2),0,0, 0,0,1.3,0, 0,0,0,1);
 var head2torsotransMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,3.2, 0,0,0,1);
 var head2torsoMatrix = new THREE.Matrix4().multiplyMatrices(head2torsotransMatrix,head2torsoscalMatrix);
+
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -187,6 +189,7 @@ while (count <= 250){
 }
 
 
+
 // TO-DO: PUT TOGETHER THE REST OF YOUR STAR-NOSED MOLE AND ADD TO THE SCENE!
 // Hint: Hint: Add one piece of geometry at a time, then implement the motion for that part. 
 //             Then you can make sure your hierarchy still works properly after each step.
@@ -253,6 +256,7 @@ function updateBody() {
       torso.setMatrix(RotatedtorsoRotMatrix); 
       head2torso.setMatrix(head2torsoRotMatrix);
       break;
+
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate   
