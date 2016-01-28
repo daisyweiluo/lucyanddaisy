@@ -136,6 +136,7 @@ var palmscalMtx = getscaleMatrix(0.15,0.1,0.5);
 var LpalmMtx = multiplyHelper(LpalmtransMtx,palmscalMtx);
 var RpalmMtx = multiplyHelper(RpalmtransMtx,palmscalMtx);
 
+
 //FRONT THIGHS
 var frontLtransMatrix = gettransMatrix(3.5,-2,10);
 var frontRtransMatrix = gettransMatrix(-3.5,-2,10);
@@ -147,10 +148,20 @@ var frontRMatrix = multiplyHelper(frontRtransMatrix,frontscalMatrix);
 //FRONT KNEE
 var frontLLtransMatrix = gettransMatrix(3.5,-3,10);
 var frontRLtransMatrix = gettransMatrix(-3.5,-3,10);
-var frontLscalMatrix = getscaleMatrix(0.2,0.3,0.2);
+var frontLscalMatrix = getscaleMatrix(0.2,0.5,0.2);
 
 var frontLLMatrix = multiplyHelper(frontLLtransMatrix,frontLscalMatrix);
 var frontRLMatrix = multiplyHelper(frontRLtransMatrix,frontLscalMatrix);
+
+//FRONT PALM
+var frontLpalmtransMtx = gettransMatrix(3.5,-4.5,10.5);
+var frontRpalmtransMtx = gettransMatrix(-3.5,-4.5,10.5);
+var frontpalmscalMtx = getscaleMatrix(0.4,0.1,0.5);
+var frontLpalmMtx = multiplyHelper(frontLpalmtransMtx,frontpalmscalMtx);
+var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
+
+// Lpalm.push(frontLpalmtransMtx);
+// Lpalm.push(frontpalmscalMtx);
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -184,6 +195,10 @@ var frontRleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontLLleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontRLleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
+ //PALM
+var frontLpalm = new THREE.Mesh(torsoGeometry,normalMaterial);
+var frontRpalm = new THREE.Mesh(torsoGeometry,normalMaterial);
+
 //HEAD TO TORSO
 // var head2torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 
@@ -205,6 +220,10 @@ frontRleg.setMatrix(frontRMatrix);
 frontLLleg.setMatrix(frontLLMatrix);
 frontRLleg.setMatrix(frontRLMatrix);
 
+frontLpalm.setMatrix(frontLpalmMtx);
+frontRpalm.setMatrix(frontRpalmMtx);
+
+
 //scene.add(torso);
 scene.add(Lleg);
 scene.add(Rleg);
@@ -221,6 +240,9 @@ scene.add(frontRleg);
 
 scene.add(frontLLleg);
 scene.add(frontRLleg);
+
+scene.add(frontLpalm);
+scene.add(frontRpalm);
 
 
 // //HEAD LOOP
@@ -338,7 +360,7 @@ while (count <= 250){
 //FRONT THIGH LOOP
 // var flegcount = 1; 
 // var fpos = -2;
-// var ScalFLegMatrixs = [];
+// var ScalFLegMatrixs =[];
 // var TransFLegMatrixs = [];
 
 // var flegs = [];
@@ -416,17 +438,18 @@ function updateBody() {
 
       //rotation:
       var rotateZ = getRotMatrix(p,"x");
-
       var torsoRotMatrix = multiplyHelper(torsoMatrix,rotateZ);
+
       // var torsoTransMatrix = multiplyHelper(torsoRotMatrix, transMatrix);
       // var RotatedtorsoRotMatrix = multiplyHelper(torsoTransMatrix,rotMatrix);
       
+      //rotation of tails
       for(var index = 0; index < tails.length; index++){
         var tailRotMatrix = multiplyHelper(torsoRotMatrix,TransTailMatrixs[index]);
         var LoopTailRot = multiplyHelper(tailRotMatrix,ScalTailMatrixs[index]);
         tails[index].setMatrix(LoopTailRot);
       }
-
+      //rotations of body
       for(var index = 0; index < body.length; index++){
         var bodyRotMatrix = multiplyHelper(torsoRotMatrix,TransBodyMatrixs[index]);
         var LoopBodyRot = multiplyHelper(bodyRotMatrix,ScalBodyMatrixs[index]);
@@ -440,12 +463,60 @@ function updateBody() {
 
       }
 
+      //rotation of front legs:
+      var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
+      frontLpalm.setMatrix(frontLpalmRotMatrix);
+
+      var frontLRotMatrix = multiplyHelper(torsoRotMatrix, frontLMatrix);
+      frontLleg.setMatrix(frontLRotMatrix);
+
+      var frontLLRotMatrix = multiplyHelper(torsoRotMatrix, frontLLMatrix);
+      frontLLleg.setMatrix(frontLLRotMatrix);
+
+      var frontRRotMatrix = multiplyHelper(torsoRotMatrix, frontRMatrix);
+      frontRleg.setMatrix(frontRRotMatrix);
+
+      var frontRLRotMatrix = multiplyHelper(torsoRotMatrix, frontRLMatrix);
+      frontRLleg.setMatrix(frontRLRotMatrix);
+
+      var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
+      frontLpalm.setMatrix(frontLpalmRotMatrix);
+      //Lpalm.push(rotateZ);
+
+      var frontRpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontRpalmMtx);
+      frontRpalm.setMatrix(frontRpalmRotMatrix);
 
       // var head2torsoRotMatrix = multiplyHelper(torsoRotMatrix,head2torsoMatrix);
 
       // torso.setMatrix(RotatedtorsoRotMatrix); 
       // head2torso.setMatrix(head2torsoRotMatrix);
       break;
+
+      case(key == "P" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+      }
+
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame 
+
+     
+
+      var rot = getRotMatrix(p,"x");
+
+    //   var palm2 = Lpalm[0];
+    //   for(var m=0; m < Lpalm.length; m++){
+    //   palm2 = multiplyHelper(palm, Lpalm[index]);
+    // }
+    //   var palmRot = multiplyHelper(rot,palm2);
+    //   frontLpalm.setMatrix(palmRot);
+
+
+      break;
+
 
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
@@ -505,6 +576,12 @@ function multiplyHelper(m1,m2){
   return obj;
 }
 
+function BacktoOrigin(m1){
+  var obj = 
+  inverse(m1);
+
+}
+
 // LISTEN TO KEYBOARD
 // Hint: Pay careful attention to how the keys already specified work!
 var keyboard = new THREEx.KeyboardState();
@@ -519,6 +596,10 @@ keyboard.domElement.addEventListener('keydown',function(event){
   else if(keyboard.eventMatches(event,"0")){    // 0: Set camera to neutral position, view reset
     camera.position.set(45,0,0);
     camera.lookAt(scene.position);}
+
+  else if(keyboard.eventMatches(event,"P")){
+    (key == "P")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "P")
+  }
   else if(keyboard.eventMatches(event,"U")){ 
     (key == "U")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "U")}  
 
