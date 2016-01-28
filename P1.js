@@ -524,6 +524,11 @@ function updateBody() {
         tails[index].setMatrix(LoopTailRot);
       }
 
+      for(var index = 0; index < bigtent.length; index++){
+        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentMatrix[index]);
+        bigtent[index].setMatrix(BigtentRotMatrix);
+      }
+
       for(var index = 0; index < body.length; index++){
         var bodyRotMatrix = multiplyHelper(torsoRotMatrix,TransBodyMatrixs[index]);
         var LoopBodyRot = multiplyHelper(bodyRotMatrix,ScalBodyMatrixs[index]);
