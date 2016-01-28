@@ -92,7 +92,7 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 
 //45 rotated is the torso
 var torsoMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
- var legMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
+var legMatrix = new THREE.Matrix4().set(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
 
 // var transMatrix = gettransMatrix(0,0,9);
 // var rotMatrix = getRotMatrix(dg,"x");
@@ -124,6 +124,7 @@ var RsmllegMatrix = multiplyHelper(RsmllegtransMatrix,smllegscalMatrix);
  var LlowerlegMatrix = multiplyHelper(LlowerlegtransMatrix,lowerlegscalMatrix);
  var RlowerlegMatrix = multiplyHelper(RlowerlegtransMatrix,lowerlegscalMatrix);
 
+
 //HEAD TO TORSO 
 // var head2torsoscalMatrix = getscaleMatrix(1,Math.sqrt(2),1.3);
 // var head2torsotransMatrix = gettransMatrix(0,0,3.2);
@@ -151,6 +152,36 @@ var frontLscalMatrix = getscaleMatrix(0.2,0.3,0.2);
 
 var frontLLMatrix = multiplyHelper(frontLLtransMatrix,frontLscalMatrix);
 var frontRLMatrix = multiplyHelper(frontRLtransMatrix,frontLscalMatrix);
+
+var nosetransMatrix = gettransMatrix(0,0,18);
+var nosescalMatrix =  getscaleMatrix(0.2,0.2,0.4);
+var noseMatrix=multiplyHelper(nosetransMatrix,nosescalMatrix);
+
+//SMALL NOSE TENTACLES
+var noseSmallscalMatrix=getscaleMatrix(0.05,0.2,0.05);
+var noseSmallURtransMatrix = gettransMatrix(0,1.5,18.5);
+var noseSmallULtransMatrix = gettransMatrix(-0.5,1.5,18.5);
+var noseSmallDRtransMatrix = gettransMatrix(0,-1.5,18.5);
+var noseSmallDLtransMatrix = gettransMatrix(-0.5,-1.5,18.5);
+var noseSmallURMatrix=multiplyHelper(noseSmallURtransMatrix,noseSmallscalMatrix);
+var noseSmallULMatrix=multiplyHelper(noseSmallULtransMatrix,noseSmallscalMatrix);
+var noseSmallDRMatrix=multiplyHelper(noseSmallDRtransMatrix,noseSmallscalMatrix);
+var noseSmallDLMatrix=multiplyHelper(noseSmallDLtransMatrix,noseSmallscalMatrix);
+
+// BIG NOSE TENTACLES
+// var rotateBig = new THREE.Matrix4().set(1,        0,         0,        0, 
+//                                         0, Math.cos(-20),-Math.sin(-20), 0, 
+//                                         0, Math.sin(-20), Math.cos(-20), 0,
+//                                         0,        0,         0,        1);
+// var noseBigscalMatrix=getscaleMatrix(0.05,0.5,0.05);
+// var noseBigURtransMatrix = gettransMatrix(0,3,18.5);
+// var rotateBig = new THREE.Matrix4().set(Math.cos(40), -Math.sin(40), 0, 0, 
+//                                         Math.sin(40), Math.cos(40), 0, 0, 
+//                                         0, 0,1, 0,
+//                                         0, 0, 0, 1);
+// var noseBiginterMatrix=multiplyHelper(rotateBig,noseBigURtransMatrix);
+// var noseBigMatrix=multiplyHelper(noseBiginterMatrix,noseBigscalMatrix);
+
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -184,6 +215,16 @@ var frontRleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontLLleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontRLleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
+//Nose
+var nose=new THREE.Mesh(torsoGeometry,normalMaterial);
+
+// Nose Tentacles SMALL
+var noseSmallUR=new THREE.Mesh(torsoGeometry,normalMaterial);
+var noseSmallUL=new THREE.Mesh(torsoGeometry,normalMaterial);
+var noseSmallDR=new THREE.Mesh(torsoGeometry,normalMaterial);
+var noseSmallDL=new THREE.Mesh(torsoGeometry,normalMaterial);
+
+
 //HEAD TO TORSO
 // var head2torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 
@@ -205,6 +246,12 @@ frontRleg.setMatrix(frontRMatrix);
 frontLLleg.setMatrix(frontLLMatrix);
 frontRLleg.setMatrix(frontRLMatrix);
 
+nose.setMatrix(noseMatrix);
+noseSmallUR.setMatrix(noseSmallURMatrix);
+noseSmallUL.setMatrix(noseSmallULMatrix);
+noseSmallDR.setMatrix(noseSmallDRMatrix);
+noseSmallDL.setMatrix(noseSmallDLMatrix);
+
 //scene.add(torso);
 scene.add(Lleg);
 scene.add(Rleg);
@@ -221,8 +268,11 @@ scene.add(frontRleg);
 
 scene.add(frontLLleg);
 scene.add(frontRLleg);
-
-
+scene.add(nose);
+scene.add(noseSmallUR);
+scene.add(noseSmallUL);
+scene.add(noseSmallDR);
+scene.add(noseSmallDL);
 // //HEAD LOOP
 // var hcount = 1; 
 // var hpos = 5;
@@ -335,6 +385,31 @@ while (count <= 250){
   count++;
 }
 
+// Make tentacles
+var tcount = 1; 
+var RotatetentMatrixs = [];
+var bigtentMatrix = [];
+var bigtent = [];
+var scaltentMatrix = getscaleMatrix(0.05,0.5,0.05);
+var noseBigtransMatrix = gettransMatrix(0,3,18.5);
+
+while (tcount <= 18){
+var rotateBig = new THREE.Matrix4().set(Math.cos(1.1*tcount), -Math.sin(1.1*tcount), 0, 0, 
+                                        Math.sin(1.1*tcount), Math.cos(1.1*tcount), 0, 0, 
+                                        0, 0,1, 0,
+                                        0, 0, 0, 1);
+var noseBiginterMatrix=multiplyHelper(rotateBig,noseBigtransMatrix);
+var noseBigMatrix=multiplyHelper(noseBiginterMatrix,scaltentMatrix);
+bigtentMatrix.push(noseBigMatrix);
+
+var noseBigtent = new THREE.Mesh(torsoGeometry,normalMaterial);
+noseBigtent.setMatrix(noseBigMatrix);
+bigtent.push(noseBigtent);
+
+scene.add(noseBigtent);
+tcount++;
+}
+
 //FRONT THIGH LOOP
 // var flegcount = 1; 
 // var fpos = -2;
@@ -420,6 +495,28 @@ function updateBody() {
       var torsoRotMatrix = multiplyHelper(torsoMatrix,rotateZ);
       // var torsoTransMatrix = multiplyHelper(torsoRotMatrix, transMatrix);
       // var RotatedtorsoRotMatrix = multiplyHelper(torsoTransMatrix,rotMatrix);
+      
+      noseRotMatrix=multiplyHelper(torsoRotMatrix,noseMatrix);
+      nose.setMatrix(noseRotMatrix);
+
+      noseSmallURRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallURMatrix);
+      noseSmallUR.setMatrix(noseSmallURRotMatrix); 
+
+      //noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
+      //noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+
+      //var rotateY = getRotMatrix(p,"z");
+      // var torsoRotMatrixY = multiplyHelper(torsoMatrix,rotateY);
+
+      noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
+      noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+
+
+      noseSmallDRRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallDRMatrix);
+      noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
+
+      noseSmallDLRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallDLMatrix);
+      noseSmallDL.setMatrix(noseSmallDLRotMatrix);       
       
       for(var index = 0; index < tails.length; index++){
         var tailRotMatrix = multiplyHelper(torsoRotMatrix,TransTailMatrixs[index]);
