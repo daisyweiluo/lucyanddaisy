@@ -565,16 +565,17 @@ var tcount = 1;
 var RotatetentMatrixs = [];
 var bigtentMatrix = [];
 var bigtent = [];
-var scaltentMatrix = getscaleMatrix(0.05,0.5,0.05);
-var noseBigtransMatrix = gettransMatrix(0,3,18.5);
+var noseinterMatrix=[];
+var scaltentMatrix = getscaleMatrix(0.05,0.8,0.05);
+var noseBigtransMatrix = gettransMatrix(0,2,18.5);
 
 while (tcount <= 18){
 var rotateBig = new THREE.Matrix4().set(Math.cos(1.1*tcount), -Math.sin(1.1*tcount), 0, 0, 
                                         Math.sin(1.1*tcount), Math.cos(1.1*tcount), 0, 0, 
                                         0, 0,1, 0,
                                         0, 0, 0, 1);
-
 var noseBiginterMatrix= multiplyHelper(rotateBig,noseBigtransMatrix);
+noseinterMatrix.push(noseBiginterMatrix);
 var noseBigMatrix = multiplyHelper(noseBiginterMatrix,scaltentMatrix);
 bigtentMatrix.push(noseBigMatrix);
 
@@ -1049,6 +1050,26 @@ function updateBody() {
 
 
 
+      case(key == "N" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+      }
+
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
+
+      var rotateY = getRotMatrix(2*p,"x");
+
+
+      for(var index = 0; index < noseinterMatrix.length; index++){
+        var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
+        var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
+        bigtent[index].setMatrix(tmp2);
+      }
+
     default:
       break;
   }
@@ -1134,6 +1155,9 @@ keyboard.domElement.addEventListener('keydown',function(event){
 
       else if(keyboard.eventMatches(event,"D")){ 
     (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "D")}  
+
+      else if(keyboard.eventMatches(event,"N")){ 
+    (key == "N")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "N")}  
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
