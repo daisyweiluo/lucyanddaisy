@@ -120,7 +120,7 @@ var toeMatrix = getscaleMatrix(1,1,1);
 //var transRotatedtorsoMatrix = multiplyHelper(RotatedtorsoMatrix, transMatrix);
 
 // TORSO TESTING
-var torsotrans = multiplyHelper(torsoMatrix, gettransMatrix(10,10,10));
+//var torsotrans = multiplyHelper(torsoMatrix, gettransMatrix(10,10,10));
 
 //LEGS THIGHS
 //******* BACK MAIN LEG MATRIX **********
@@ -251,10 +251,11 @@ var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
 //NOSE
 var nosetransMatrix = gettransMatrix(0,0,18);
 var nosescalMatrix =  getscaleMatrix(0.2,0.2,0.4);
-var noseMatrix=multiplyHelper(nosetransMatrix,nosescalMatrix);
+var n1 = multiplyHelper(torsoMatrix, nosetransMatrix);
+var noseMatrix=multiplyHelper(n1,nosescalMatrix);
 
 //SMALL NOSE TENTACLES
-var noseSmallscalMatrix=getscaleMatrix(0.05,0.2,0.05);
+var noseSmallscalMatrix = getscaleMatrix(0.05,0.2,0.05);
 var noseSmallURtransMatrix = gettransMatrix(0,1.5,18.5);
 var noseSmallULtransMatrix = gettransMatrix(-0.5,1.5,18.5);
 var noseSmallDRtransMatrix = gettransMatrix(0,-1.5,18.5);
@@ -287,7 +288,7 @@ var noseSmallDLMatrix=multiplyHelper(noseSmallDLtransMatrix,noseSmallscalMatrix)
 
 
 // CREATE BODY
-var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
+//var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 //LEGS
 var Lleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var Rleg = new THREE.Mesh(torsoGeometry,normalMaterial);
@@ -351,7 +352,7 @@ var frontToe9 = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontToe10 = new THREE.Mesh(torsoGeometry,normalMaterial);
 
 
-torso.setMatrix(torsotrans);
+//torso.setMatrix(torsotrans);
 Lleg.setMatrix(LlegMatrix);
 Rleg.setMatrix(RlegMatrix);
 Lsmlleg.setMatrix(LsmllegMatrix);
@@ -399,10 +400,9 @@ noseSmallUL.setMatrix(noseSmallULMatrix);
 noseSmallDR.setMatrix(noseSmallDRMatrix);
 noseSmallDL.setMatrix(noseSmallDLMatrix);
 
-scene.add(torso);
+//scene.add(torso);
 scene.add(Lleg);
 scene.add(Rleg);
-//scene.add(head2torso);
 scene.add(Lsmlleg);
 scene.add(Rsmlleg);
 scene.add(Llowerleg);
@@ -840,6 +840,7 @@ function updateBody() {
       }
         for(var index = 0; index < fbody.length; index++){
         var fbodyRotMatrix = multiplyHelper(torsoRotMatrix,fTransBodyMatrixs[index]);
+        fTransBodyMatrixs[index]=fbodyRotMatrix;
         var fLoopBodyRot = multiplyHelper(fbodyRotMatrix,fScalBodyMatrixs[index]);
         fbody[index].setMatrix(fLoopBodyRot);
 
@@ -1062,13 +1063,42 @@ function updateBody() {
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
       var rotateY = getRotMatrix(2*p,"x");
-
+      var rotateY2 = getRotMatrix(p/8,"y");
+      var torsoRot = multiplyHelper(torsoMatrix, rotateY2);
 
       for(var index = 0; index < noseinterMatrix.length; index++){
         var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
-        var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
+        var tmp_1 = multiplyHelper(rotateY2, tmp1);
+        var tmp2 = multiplyHelper(tmp_1,scaltentMatrix);
         bigtent[index].setMatrix(tmp2);
       }
+
+
+      noseRotMatrix=multiplyHelper(torsoRot,noseMatrix);
+      nose.setMatrix(noseRotMatrix);
+
+      noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
+      noseSmallUR.setMatrix(noseSmallURRotMatrix); 
+
+
+      noseSmallULRotMatrix=multiplyHelper(torsoRot,noseSmallULMatrix);
+      noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+
+
+      noseSmallDRRotMatrix=multiplyHelper(torsoRot,noseSmallDRMatrix);
+      noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
+
+      noseSmallDLRotMatrix=multiplyHelper(torsoRot,noseSmallDLMatrix);
+      noseSmallDL.setMatrix(noseSmallDLRotMatrix);   
+
+          for(var index =  Math.floor(4*fbody.length/7) ; index < fbody.length; index++){
+        var tmp3 = multiplyHelper(torsoRot,fTransBodyMatrixs[index]);
+        var tmp4 = multiplyHelper(tmp3,fScalBodyMatrixs[index]);
+        fbody[index].setMatrix(tmp4);
+      }
+
+
+      break;
 
     default:
       break;
