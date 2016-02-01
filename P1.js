@@ -778,6 +778,129 @@ function updateBody() {
       // head2torso.setMatrix(head2torsoRotMatrix);
       break;
 
+     case(key == "D" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+      }
+
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame 
+
+     //rotation:
+      var rotateZ = getRotMatrix(p,"x");
+      var torsoRotMatrix = multiplyHelper(torsoMatrix,rotateZ);
+
+      // var torsoTransMatrix = multiplyHelper(torsoRotMatrix, transMatrix);
+      // var RotatedtorsoRotMatrix = multiplyHelper(torsoTransMatrix,rotMatrix);
+      
+      noseRotMatrix=multiplyHelper(torsoRotMatrix,noseMatrix);
+      nose.setMatrix(noseRotMatrix);
+
+      noseSmallURRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallURMatrix);
+      noseSmallUR.setMatrix(noseSmallURRotMatrix); 
+
+      //noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
+      //noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+
+      //var rotateY = getRotMatrix(p,"z");
+      // var torsoRotMatrixY = multiplyHelper(torsoMatrix,rotateY);
+
+      noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
+      noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+
+
+      noseSmallDRRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallDRMatrix);
+      noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
+
+      noseSmallDLRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallDLMatrix);
+      noseSmallDL.setMatrix(noseSmallDLRotMatrix);       
+      
+      for(var index = 0; index < tails.length; index++){
+        var tailRotMatrix = multiplyHelper(torsoRotMatrix,TransTailMatrixs[index]);
+        var LoopTailRot = multiplyHelper(tailRotMatrix,ScalTailMatrixs[index]);
+        tails[index].setMatrix(LoopTailRot);
+      }
+      //rotations of body
+
+
+      for(var index = 0; index < bigtent.length; index++){
+        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentMatrix[index]);
+        bigtent[index].setMatrix(BigtentRotMatrix);
+      }
+
+      for(var index = 0; index < body.length; index++){
+        var bodyRotMatrix = multiplyHelper(torsoRotMatrix,TransBodyMatrixs[index]);
+        var LoopBodyRot = multiplyHelper(bodyRotMatrix,ScalBodyMatrixs[index]);
+        body[index].setMatrix(LoopBodyRot);
+
+      }
+        for(var index = 0; index < fbody.length; index++){
+        var fbodyRotMatrix = multiplyHelper(torsoRotMatrix,fTransBodyMatrixs[index]);
+        var fLoopBodyRot = multiplyHelper(fbodyRotMatrix,fScalBodyMatrixs[index]);
+        fbody[index].setMatrix(fLoopBodyRot);
+
+      }
+
+      //rotation of front legs:
+      var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
+      frontLpalm.setMatrix(frontLpalmRotMatrix);
+
+      var frontLRotMatrix = multiplyHelper(torsoRotMatrix, frontLMatrix);
+      frontLleg.setMatrix(frontLRotMatrix);
+
+      var frontLLRotMatrix = multiplyHelper(torsoRotMatrix, frontLLMatrix);
+      frontLLleg.setMatrix(frontLLRotMatrix);
+
+      var frontRRotMatrix = multiplyHelper(torsoRotMatrix, frontRMatrix);
+      frontRleg.setMatrix(frontRRotMatrix);
+
+      var frontRLRotMatrix = multiplyHelper(torsoRotMatrix, frontRLMatrix);
+      frontRLleg.setMatrix(frontRLRotMatrix);
+
+      var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
+      frontLpalm.setMatrix(frontLpalmRotMatrix);
+      //Lpalm.push(rotateZ);
+
+      var frontRpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontRpalmMtx);
+      frontRpalm.setMatrix(frontRpalmRotMatrix);
+
+      var frontToe1RotMatrix = multiplyHelper(torsoRotMatrix, frontToe1Matrix);
+      frontToe1.setMatrix(frontToe1RotMatrix);
+
+      var frontToe2RotMatrix = multiplyHelper(torsoRotMatrix, frontToe2Matrix);
+      frontToe2.setMatrix(frontToe2RotMatrix);
+
+      var frontToe3RotMatrix = multiplyHelper(torsoRotMatrix, frontToe3Matrix);
+      frontToe3.setMatrix(frontToe3RotMatrix);
+
+      var frontToe4RotMatrix = multiplyHelper(torsoRotMatrix, frontToe4Matrix);
+      frontToe4.setMatrix(frontToe4RotMatrix);
+
+      var frontToe5RotMatrix = multiplyHelper(torsoRotMatrix, frontToe5Matrix);
+      frontToe5.setMatrix(frontToe5RotMatrix);
+
+      var frontToe6RotMatrix = multiplyHelper(torsoRotMatrix, frontToe6Matrix);
+      frontToe6.setMatrix(frontToe6RotMatrix);
+
+      var frontToe7RotMatrix = multiplyHelper(torsoRotMatrix, frontToe7Matrix);
+      frontToe7.setMatrix(frontToe7RotMatrix);
+
+      var frontToe8RotMatrix = multiplyHelper(torsoRotMatrix, frontToe8Matrix);
+      frontToe8.setMatrix(frontToe8RotMatrix);
+
+      var frontToe9RotMatrix = multiplyHelper(torsoRotMatrix, frontToe9Matrix);
+      frontToe9.setMatrix(frontToe9RotMatrix);
+
+      var frontToe10RotMatrix = multiplyHelper(torsoRotMatrix, frontToe10Matrix);
+      frontToe10.setMatrix(frontToe10RotMatrix);
+      // var head2torsoRotMatrix = multiplyHelper(torsoRotMatrix,head2torsoMatrix);
+
+      // torso.setMatrix(RotatedtorsoRotMatrix); 
+      // head2torso.setMatrix(head2torsoRotMatrix);
+      break;
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
       // Note: Remember spacebar sets jumpcut/animate   
@@ -853,6 +976,7 @@ function updateBody() {
       backToe10.setMatrix(backToe10Matrix);
 
       break;
+
 
 
       case(key == "I" && animate):
@@ -1008,6 +1132,8 @@ keyboard.domElement.addEventListener('keydown',function(event){
       else if(keyboard.eventMatches(event,"I")){ 
     (key == "I")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/9,1), key = "I")}  
 
+      else if(keyboard.eventMatches(event,"D")){ 
+    (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "D")}  
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
