@@ -778,7 +778,7 @@ function updateBody() {
       // head2torso.setMatrix(head2torsoRotMatrix);
       break;
 
-     case(key == "D" && animate):
+     case(key == "E" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
       if (time > time_end){
@@ -1132,8 +1132,8 @@ keyboard.domElement.addEventListener('keydown',function(event){
       else if(keyboard.eventMatches(event,"I")){ 
     (key == "I")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/9,1), key = "I")}  
 
-      else if(keyboard.eventMatches(event,"D")){ 
-    (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "D")}  
+      else if(keyboard.eventMatches(event,"E")){ 
+    (key == "E")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "E")}  
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
