@@ -106,6 +106,7 @@ var frontRlegMatrix = gettransMatrix(-3.5,-2,10);
 var frontLpalmMatrix = gettransMatrix(0,-2.5,0.5);
 var frontRpalmMatrix = gettransMatrix(0,-2.5,0.5);
 
+var headtransMatrix = gettransMatrix(0,0,16);
 
 var toeMatrix = getscaleMatrix(1,1,1);
 //************************
@@ -121,6 +122,11 @@ var toeMatrix = getscaleMatrix(1,1,1);
 
 // TORSO TESTING
 //var torsotrans = multiplyHelper(torsoMatrix, gettransMatrix(10,10,10));
+
+//HEADS
+var headMatrix = multiplyHelper(torsoMatrix, headtransMatrix);
+var headscal = getscaleMatrix(0.7,0.7,0.7);
+var head_Matrix = multiplyHelper(headMatrix, headscal);
 
 //LEGS THIGHS
 //******* BACK MAIN LEG MATRIX **********
@@ -289,6 +295,9 @@ var noseSmallDLMatrix=multiplyHelper(noseSmallDLtransMatrix,noseSmallscalMatrix)
 
 // CREATE BODY
 //var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
+
+//HEAD
+var head = new THREE.Mesh(torsoGeometry,normalMaterial);
 //LEGS
 var Lleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var Rleg = new THREE.Mesh(torsoGeometry,normalMaterial);
@@ -352,6 +361,8 @@ var frontToe9 = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontToe10 = new THREE.Mesh(torsoGeometry,normalMaterial);
 
 
+
+head.setMatrix(head_Matrix);
 //torso.setMatrix(torsotrans);
 Lleg.setMatrix(LlegMatrix);
 Rleg.setMatrix(RlegMatrix);
@@ -401,6 +412,7 @@ noseSmallDR.setMatrix(noseSmallDRMatrix);
 noseSmallDL.setMatrix(noseSmallDLMatrix);
 
 //scene.add(torso);
+scene.add(head);
 scene.add(Lleg);
 scene.add(Rleg);
 scene.add(Lsmlleg);
@@ -516,7 +528,7 @@ while(bcount < 100 ){
                                                 0,0,c,0, 
                                                 0,0,0,1);
   fScalBodyMatrixs.push(fscalbodyMatrix);
-  forigin+=a*(1-0.8);
+  forigin+=a*(1-0.85);
   var ftransbodyMatrix = multiplyHelper(torsoMatrix, gettransMatrix(0,0,forigin));
   fTransBodyMatrixs.push(ftransbodyMatrix);
   var fLoopBodyMatrix = multiplyHelper(ftransbodyMatrix,fscalbodyMatrix);
@@ -672,6 +684,9 @@ function updateBody() {
 
       // var torsoTransMatrix = multiplyHelper(torsoRotMatrix, transMatrix);
       // var RotatedtorsoRotMatrix = multiplyHelper(torsoTransMatrix,rotMatrix);
+
+      var headRotMatrix = multiplyHelper(torsoRotMatrix, head_Matrix);
+      head.setMatrix(headRotMatrix);
       
       noseRotMatrix=multiplyHelper(torsoRotMatrix,noseMatrix);
       nose.setMatrix(noseRotMatrix);
@@ -796,6 +811,9 @@ function updateBody() {
 
       // var torsoTransMatrix = multiplyHelper(torsoRotMatrix, transMatrix);
       // var RotatedtorsoRotMatrix = multiplyHelper(torsoTransMatrix,rotMatrix);
+
+      var headRotMatrix = multiplyHelper(torsoRotMatrix, head_Matrix);
+      head.setMatrix(headRotMatrix);
       
       noseRotMatrix=multiplyHelper(torsoRotMatrix,noseMatrix);
       nose.setMatrix(noseRotMatrix);
@@ -826,7 +844,6 @@ function updateBody() {
       }
       //rotations of body
 
-
       for(var index = 0; index < bigtent.length; index++){
         var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentMatrix[index]);
         bigtent[index].setMatrix(BigtentRotMatrix);
@@ -840,7 +857,6 @@ function updateBody() {
       }
         for(var index = 0; index < fbody.length; index++){
         var fbodyRotMatrix = multiplyHelper(torsoRotMatrix,fTransBodyMatrixs[index]);
-        fTransBodyMatrixs[index]=fbodyRotMatrix;
         var fLoopBodyRot = multiplyHelper(fbodyRotMatrix,fScalBodyMatrixs[index]);
         fbody[index].setMatrix(fLoopBodyRot);
 
