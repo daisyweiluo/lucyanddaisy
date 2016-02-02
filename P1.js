@@ -1079,42 +1079,88 @@ function updateBody() {
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
       var rotateY = getRotMatrix(2*p,"x");
-      var rotateY2 = getRotMatrix(p/8,"y");
-      var torsoRot = multiplyHelper(torsoMatrix, rotateY2);
+      var torsoRot = multiplyHelper(torsoMatrix, rotateY);
 
       for(var index = 0; index < noseinterMatrix.length; index++){
         var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
-        var tmp_1 = multiplyHelper(rotateY2, tmp1);
-        var tmp2 = multiplyHelper(tmp_1,scaltentMatrix);
+        var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
         bigtent[index].setMatrix(tmp2);
       }
 
 
-      noseRotMatrix=multiplyHelper(torsoRot,noseMatrix);
-      nose.setMatrix(noseRotMatrix);
+      break;
 
-      noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
-      noseSmallUR.setMatrix(noseSmallURRotMatrix); 
+      case(key == "H" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
-
-      noseSmallULRotMatrix=multiplyHelper(torsoRot,noseSmallULMatrix);
-      noseSmallUL.setMatrix(noseSmallULRotMatrix); 
-
-
-      noseSmallDRRotMatrix=multiplyHelper(torsoRot,noseSmallDRMatrix);
-      noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
-
-      noseSmallDLRotMatrix=multiplyHelper(torsoRot,noseSmallDLMatrix);
-      noseSmallDL.setMatrix(noseSmallDLRotMatrix);   
-
-          for(var index =  Math.floor(4*fbody.length/7) ; index < fbody.length; index++){
-        var tmp3 = multiplyHelper(torsoRot,fTransBodyMatrixs[index]);
-        var tmp4 = multiplyHelper(tmp3,fScalBodyMatrixs[index]);
-        fbody[index].setMatrix(tmp4);
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
       }
 
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
+      var rotateY = getRotMatrix(p,"y"); 
+
+      for(var index = 0; index < noseinterMatrix.length; index++){
+        var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
+        var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
+        bigtent[index].setMatrix(tmp2);
+      }
+
+      var headorigin = multiplyHelper(head_Matrix, gettransMatrix(0,0,-3));
+      var headRotMatrix = multiplyHelper(headorigin, rotateY);
+      var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
+      head.setMatrix(BackheadRotMatrix);
+
+      var noseRotMatrix1 = multiplyHelper(noseMatrix, gettransMatrix(0,0,-3));
+      var noseRotMatrix2 = multiplyHelper(noseRotMatrix1, rotateY);
+      var noseRotMatrix3 = multiplyHelper(noseRotMatrix2, gettransMatrix(0,0,3));
+      nose.setMatrix(noseRotMatrix3);
+
+      noseSmallURRotMatrix = multiplyHelper(noseSmallURMatrix, gettransMatrix(0,0,-3));
+      noseSmallURRotMatrix.multiply(rotateY);
+      noseSmallURRotMatrix.multiply(gettransMatrix(0,0,3));
+      noseSmallUR.setMatrix(noseSmallURRotMatrix); 
+
+      noseSmallULRotMatrix=multiplyHelper(noseSmallULMatrix, gettransMatrix(0,0,-3));
+      noseSmallULRotMatrix.multiply(rotateY);
+      noseSmallULRotMatrix.multiply(gettransMatrix(0,0,3));
+      noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+
+      // noseSmallDRRotMatrix=multiplyHelper(torsoRot,noseSmallDRMatrix);
+      // noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
+
+      // noseSmallDLRotMatrix=multiplyHelper(torsoRot,noseSmallDLMatrix);
+      // noseSmallDL.setMatrix(noseSmallDLRotMatrix);   
+
+
+
+      // for(var index =  Math.floor(4*fbody.length/7) ; index < fbody.length; index++){
+      // var tmp3 = multiplyHelper(torsoRot,fTransBodyMatrixs[index]);
+      // var tmp4 = multiplyHelper(tmp3,fScalBodyMatrixs[index]);
+      // fbody[index].setMatrix(tmp4);
+      // }
       break;
+
+
+       case(key == "G" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+      }
+
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
+
+      var rotateY = getRotMatrix(-p,"y"); 
+      var headorigin = multiplyHelper(head_Matrix, gettransMatrix(0,0,-3));
+      var headRotMatrix = multiplyHelper(headorigin, rotateY);
+      var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
+      head.setMatrix(BackheadRotMatrix);
 
     default:
       break;
@@ -1169,11 +1215,22 @@ function multiplyHelper(m1,m2){
   return obj;
 }
 
-function BacktoOrigin(m1){
-  var obj = 
-  inverse(m1);
+// function BacktoOrigin(m1){
+//   var m2 = multiplyHelper(m1, new THREE.Matrix4().set(0,0,0,1));
+//   var m3 = getInversePosition(m2);
+//   return m3;
+// }
 
-}
+// function getInversePosition(m1){
+//   var m2 = multiplyHelper(m1, new THREE.Matrix4().set(-1,0,0,0));
+//   var m3 = multiplyHelper(m1, new THREE.Matrix4().set(0,-1,0,0));
+//   var m4 = multiplyHelper(m1, new THREE.Matrix4().set(0,0,-1,0));
+//   var m5 = multiplyHelper(m1, new THREE.Matrix4().set(0,0,0,-1));
+//   var obj = new THREE.Matrix4().set(1,0,0,m2, 0,1,0,m3, 0,0,1,m4, 0,0,0,m5);
+//   return obj;
+// }
+
+
 
 // LISTEN TO KEYBOARD
 // Hint: Pay careful attention to how the keys already specified work!
@@ -1204,6 +1261,12 @@ keyboard.domElement.addEventListener('keydown',function(event){
 
       else if(keyboard.eventMatches(event,"N")){ 
     (key == "N")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "N")}  
+
+      else if(keyboard.eventMatches(event,"H")){ 
+    (key == "H")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "H")}  
+ 
+    else if(keyboard.eventMatches(event,"G")){ 
+      (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "G")}  
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
