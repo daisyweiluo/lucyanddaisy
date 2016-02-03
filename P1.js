@@ -108,7 +108,7 @@ var frontRpalmMatrix = gettransMatrix(0,-2.5,0.5);
 
 var headtransMatrix = gettransMatrix(0,0,16);
 
-var toeMatrix = getscaleMatrix(1,1,1);
+var toeMatrix = getscaleMatrix(0.1,0.1,0.1);
 //************************
 
 //getscalMatrix
@@ -121,7 +121,7 @@ var toeMatrix = getscaleMatrix(1,1,1);
 //var transRotatedtorsoMatrix = multiplyHelper(RotatedtorsoMatrix, transMatrix);
 
 // TORSO TESTING
-//var torsotrans = multiplyHelper(torsoMatrix, gettransMatrix(10,10,10));
+var torsotrans = multiplyHelper(torsoMatrix, gettransMatrix(0,0,-2.3));
 
 //HEADS
 var headMatrix = multiplyHelper(torsoMatrix, headtransMatrix);
@@ -255,17 +255,17 @@ var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
 
 
 //NOSE
-var nosetransMatrix = gettransMatrix(0,0,18);
-var nosescalMatrix =  getscaleMatrix(0.2,0.2,0.4);
-var n1 = multiplyHelper(torsoMatrix, nosetransMatrix);
-var noseMatrix=multiplyHelper(n1,nosescalMatrix);
+var nosetransMatrix = gettransMatrix(0,0,2);
+var nosescalMatrix =  getscaleMatrix(0.4,0.5,0.4);
+var nosematrix = multiplyHelper(headMatrix, nosetransMatrix);
+var noseMatrix=multiplyHelper(nosematrix,nosescalMatrix);
 
 //SMALL NOSE TENTACLES
-var noseSmallscalMatrix = getscaleMatrix(0.05,0.2,0.05);
-var noseSmallURtransMatrix = gettransMatrix(0,1.5,18.5);
-var noseSmallULtransMatrix = gettransMatrix(-0.5,1.5,18.5);
-var noseSmallDRtransMatrix = gettransMatrix(0,-1.5,18.5);
-var noseSmallDLtransMatrix = gettransMatrix(-0.5,-1.5,18.5);
+var noseSmallscalMatrix = getscaleMatrix(0.05,0.3,0.05);
+var noseSmallURtransMatrix = multiplyHelper(nosematrix,gettransMatrix(0,1.5,0.75));
+var noseSmallULtransMatrix = multiplyHelper(nosematrix,gettransMatrix(-0.5,1.5,0.75));
+var noseSmallDRtransMatrix = multiplyHelper(nosematrix,gettransMatrix(0,-1.5,0.75));
+var noseSmallDLtransMatrix = multiplyHelper(nosematrix,gettransMatrix(-0.5,-1.5,0.75));
 var noseSmallURMatrix=multiplyHelper(noseSmallURtransMatrix,noseSmallscalMatrix);
 var noseSmallULMatrix=multiplyHelper(noseSmallULtransMatrix,noseSmallscalMatrix);
 var noseSmallDRMatrix=multiplyHelper(noseSmallDRtransMatrix,noseSmallscalMatrix);
@@ -294,7 +294,7 @@ var noseSmallDLMatrix=multiplyHelper(noseSmallDLtransMatrix,noseSmallscalMatrix)
 
 
 // CREATE BODY
-//var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
+var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 
 //HEAD
 var head = new THREE.Mesh(torsoGeometry,normalMaterial);
@@ -363,7 +363,7 @@ var frontToe10 = new THREE.Mesh(torsoGeometry,normalMaterial);
 
 
 head.setMatrix(head_Matrix);
-//torso.setMatrix(torsotrans);
+torso.setMatrix(torsotrans);
 Lleg.setMatrix(LlegMatrix);
 Rleg.setMatrix(RlegMatrix);
 Lsmlleg.setMatrix(LsmllegMatrix);
@@ -545,59 +545,95 @@ while(bcount < 100 ){
 
 //TAIL
 var count = 1; 
-var initialpos = 10;
+var initialpos = -3.78;
 var ScalTailMatrixs =[];
 var TransTailMatrixs = [];
 //All the tail Matrix is stored here
-//var tailMatrixs = [];
+var tailMatrixs = [];
 //All the tail is stored here
 var tails = [];
-while (count <= 250){
-  var n = 0.1*(1-0.01*count);
+var ip = [];
+while (count <= 90){
+  var n = 0.2*(1-0.01*count);
   var scalTailMatrix = new THREE.Matrix4().set(n,0,0,0, 
                                                 0,n,0,0, 
                                                 0,0,n,0, 
                                                 0,0,0,1);
   ScalTailMatrixs.push(scalTailMatrix);
-  initialpos+=n;
-  var transTailMatrix = multiplyHelper(torsoMatrix, gettransMatrix(0,-0.5,-initialpos));
+  initialpos-=0.1;
+  ip.push(initialpos);
+  var transTailMatrix = multiplyHelper(torsoMatrix, gettransMatrix(0,0,initialpos));
   TransTailMatrixs.push(transTailMatrix);
   var LoopTailMatrix = multiplyHelper(transTailMatrix,scalTailMatrix);
-  //tailMatrixs.push(LoopTailMatrix);
+  tailMatrixs.push(LoopTailMatrix);
 
   var LoopTail = new THREE.Mesh(torsoGeometry,normalMaterial);
   tails.push(LoopTail);
   LoopTail.setMatrix(LoopTailMatrix);
+
   scene.add(LoopTail);
+
   count++;
 }
 
+
+
 // Make tentacles
-var tcount = 1; 
-var RotatetentMatrixs = [];
-var bigtentMatrix = [];
-var bigtent = [];
-var noseinterMatrix=[];
-var scaltentMatrix = getscaleMatrix(0.05,0.8,0.05);
-var noseBigtransMatrix = gettransMatrix(0,2,18.5);
+var lcount = 1;
+var rcount = 1; 
+var bigtentlmatrix = [];
+var bigtentlMatrix = [];
+var bigtentrmatrix = [];
+var bigtentrMatrix = [];
+var bigtentl = [];
+var bigtentr = [];
+var scaltentMatrix = getscaleMatrix(0.8,0.03,0.05);
 
-while (tcount <= 18){
-var rotateBig = new THREE.Matrix4().set(Math.cos(1.1*tcount), -Math.sin(1.1*tcount), 0, 0, 
-                                        Math.sin(1.1*tcount), Math.cos(1.1*tcount), 0, 0, 
-                                        0, 0,1, 0,
-                                        0, 0, 0, 1);
-var noseBiginterMatrix= multiplyHelper(rotateBig,noseBigtransMatrix);
-noseinterMatrix.push(noseBiginterMatrix);
-var noseBigMatrix = multiplyHelper(noseBiginterMatrix,scaltentMatrix);
-bigtentMatrix.push(noseBigMatrix);
 
-var noseBigtent = new THREE.Mesh(torsoGeometry,normalMaterial);
-noseBigtent.setMatrix(noseBigMatrix);
-bigtent.push(noseBigtent);
+while (lcount <= 9){
 
-scene.add(noseBigtent);
-tcount++;
+var bigtentltmpmatrix= multiplyHelper(nosematrix,gettransMatrix(3,1.2-0.25*lcount,0.8));
+bigtentlmatrix.push(bigtentltmpmatrix);
+var noseBigMatrix = multiplyHelper(bigtentltmpmatrix,scaltentMatrix);
+bigtentlMatrix.push(noseBigMatrix);
+
+var noseBigtentl = new THREE.Mesh(torsoGeometry,normalMaterial);
+noseBigtentl.setMatrix(noseBigMatrix);
+bigtentl.push(noseBigtentl);
+
+scene.add(noseBigtentl);
+lcount++;
 }
+
+while (rcount <= 9){
+
+var bigtentrtmpmatrix= multiplyHelper(nosematrix,gettransMatrix(-3,1.2-0.25*rcount,0.8));
+bigtentrmatrix.push(bigtentrtmpmatrix);
+var noseBigMatrix = multiplyHelper(bigtentrtmpmatrix,scaltentMatrix);
+bigtentrMatrix.push(noseBigMatrix);
+
+var noseBigtentr = new THREE.Mesh(torsoGeometry,normalMaterial);
+noseBigtentr.setMatrix(noseBigMatrix);
+bigtentr.push(noseBigtentr);
+
+scene.add(noseBigtentr);
+rcount++;
+}
+
+// while (rcount <= 9){
+
+// var noseBiginterMatrix= multiplyHelper(nosematrix,gettransMatrix(0,-2,0.75+lcount*0.1));
+// bigtentlmatrix.push(noseBiginterMatrix);
+// var noseBigMatrix = multiplyHelper(noseBiginterMatrix,scaltentMatrix);
+// bigtentMatrix.push(noseBigMatrix);
+
+// var noseBigtent = new THREE.Mesh(torsoGeometry,normalMaterial);
+// noseBigtent.setMatrix(noseBigMatrix);
+// bigtent.push(noseBigtent);
+
+// scene.add(noseBigtent);
+// tcount++;
+// }
 
 //FRONT THIGH LOOP
 // var flegcount = 1; 
@@ -718,10 +754,16 @@ function updateBody() {
       //rotations of body
 
 
-      for(var index = 0; index < bigtent.length; index++){
-        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentMatrix[index]);
-        bigtent[index].setMatrix(BigtentRotMatrix);
+      for(var index = 0; index < bigtentl.length; index++){
+        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentlMatrix[index]);
+        bigtentl[index].setMatrix(BigtentRotMatrix);
       }
+
+      for(var index = 0; index < bigtentr.length; index++){
+        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentrMatrix[index]);
+        bigtentr[index].setMatrix(BigtentRotMatrix);
+      }
+
 
       for(var index = 0; index < body.length; index++){
         var bodyRotMatrix = multiplyHelper(torsoRotMatrix,TransBodyMatrixs[index]);
@@ -844,9 +886,14 @@ function updateBody() {
       }
       //rotations of body
 
-      for(var index = 0; index < bigtent.length; index++){
-        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentMatrix[index]);
-        bigtent[index].setMatrix(BigtentRotMatrix);
+      for(var index = 0; index < bigtentl.length; index++){
+        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentlMatrix[index]);
+        bigtentl[index].setMatrix(BigtentRotMatrix);
+      }
+
+      for(var index = 0; index < bigtentr.length; index++){
+        var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentrMatrix[index]);
+        bigtentr[index].setMatrix(BigtentRotMatrix);
       }
 
       for(var index = 0; index < body.length; index++){
@@ -1078,15 +1125,22 @@ function updateBody() {
 
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
-      var rotateY = getRotMatrix(2*p,"x");
-      var torsoRot = multiplyHelper(torsoMatrix, rotateY);
 
-      for(var index = 0; index < noseinterMatrix.length; index++){
-        var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
-        var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
-        bigtent[index].setMatrix(tmp2);
-      }
+      var rotateY = getRotMatrix(2*p,"y");
 
+      // for(var index = 0; index < bigtentl.length; index++){
+      //   var tmp=multiplyHelper(bigtentlMatrix[index],gettransMatrix(-3,-1.2,-0.8));
+      //   //bigtentlMatrix[index].multiply(gettransMatrix(-3,-1.2+0.25*(index+1),-0.8));
+      //   var tmp1=multiplyHelper(tmp,rotateY);
+      //   var tmp2=multiplyHelper(tmp1,gettransMatrix(3,1.2-0.25,0.8));        
+      //   //bigtentlMatrix[index].multiply(gettransMatrix(3,1.2-0.25*(index+1),0.8));
+      //   bigtentl[index].setMatrix(tmp2);
+      // }
+
+      // for(var index = 0; index < bigtentr.length; index++){
+      //   var BigtentRotMatrix = multiplyHelper(nosematrix,bigtentrMatrix[index]);
+      //   bigtentr[index].setMatrix(BigtentRotMatrix);
+      // }
 
       break;
 
@@ -1103,11 +1157,11 @@ function updateBody() {
 
       var rotateY = getRotMatrix(p,"y"); 
 
-      for(var index = 0; index < noseinterMatrix.length; index++){
-        var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
-        var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
-        bigtent[index].setMatrix(tmp2);
-      }
+      // for(var index = 0; index < noseinterMatrix.length; index++){
+      //   var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
+      //   var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
+      //   bigtent[index].setMatrix(tmp2);
+      // }
 
       var headorigin = multiplyHelper(head_Matrix, gettransMatrix(0,0,-3));
       var headRotMatrix = multiplyHelper(headorigin, rotateY);
@@ -1119,15 +1173,24 @@ function updateBody() {
       var noseRotMatrix3 = multiplyHelper(noseRotMatrix2, gettransMatrix(0,0,3));
       nose.setMatrix(noseRotMatrix3);
 
+      // noseRotMatrix=multiplyHelper(torsoRot,noseMatrix);
+      // nose.setMatrix(noseRotMatrix);
+
+      // noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
+      // noseSmallUR.setMatrix(noseSmallURRotMatrix); 
+
       noseSmallURRotMatrix = multiplyHelper(noseSmallURMatrix, gettransMatrix(0,0,-3));
       noseSmallURRotMatrix.multiply(rotateY);
       noseSmallURRotMatrix.multiply(gettransMatrix(0,0,3));
       noseSmallUR.setMatrix(noseSmallURRotMatrix); 
 
-      noseSmallULRotMatrix=multiplyHelper(noseSmallULMatrix, gettransMatrix(0,0,-3));
-      noseSmallULRotMatrix.multiply(rotateY);
-      noseSmallULRotMatrix.multiply(gettransMatrix(0,0,3));
-      noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+      // noseSmallULRotMatrix=multiplyHelper(noseSmallULMatrix, gettransMatrix(0,0,-3));
+      // noseSmallULRotMatrix.multiply(rotateY);
+      // noseSmallULRotMatrix.multiply(gettransMatrix(0,0,3));
+      // noseSmallUL.setMatrix(noseSmallULRotMatrix); 
+
+      // noseSmallULRotMatrix=multiplyHelper(torsoRot,noseSmallULMatrix);
+      // noseSmallUL.setMatrix(noseSmallULRotMatrix); 
 
       // noseSmallDRRotMatrix=multiplyHelper(torsoRot,noseSmallDRMatrix);
       // noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
@@ -1152,7 +1215,8 @@ function updateBody() {
         p = p1;
         animate = false;
         break;
-      }
+}
+
 
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
@@ -1161,6 +1225,161 @@ function updateBody() {
       var headRotMatrix = multiplyHelper(headorigin, rotateY);
       var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
       head.setMatrix(BackheadRotMatrix);
+
+      break;
+
+      case(key == "T" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+}
+
+
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
+
+      var rotateY = getRotMatrix(-p,"y"); 
+      for(var index = 0; index < tails.length; index++){
+      var temp1 = multiplyHelper(tailMatrixs[index], gettransMatrix(0,0,-(ip[index]+3.78)));
+      var temp2 = multiplyHelper( rotateY,temp1);
+      var temp3= multiplyHelper(temp2, gettransMatrix(0,0,(ip[index]+3.78)));
+      tails[index].setMatrix(temp3);
+
+    }
+      break;
+
+      case(key == "V" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+}
+
+
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
+
+      var rotateY = getRotMatrix(p,"y"); 
+      for(var index = 0; index < tails.length; index++){
+      var temp1 = multiplyHelper(tailMatrixs[index], gettransMatrix(0,0,(ip[index]+5)));
+      var temp2 = multiplyHelper(rotateY,temp1);
+      var temp3= multiplyHelper(temp2, gettransMatrix(0,0,-(ip[index]+5)));
+      tails[index].setMatrix(temp3);
+
+    }
+      break;
+
+
+      //DIGGING
+      case(key == "D" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+}
+
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
+
+
+      var rotateX = getRotMatrix(p,"x");
+
+      //rotation of left palm
+      var r2 = multiplyHelper(frontLpalmtransMtx,rotateX);
+      //var r2rot = multiplyHelper(frontLpalmtransMtx,rotateXX);
+      frontLpalmMtx = multiplyHelper(r2,frontpalmscalMtx);
+      //torso.setMatrix(torsoRotMatrix); 
+      frontLpalm.setMatrix(frontLpalmMtx);
+
+      //rotation of left toes
+      var r01 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
+      var rot1 = multiplyHelper(r01, rotateX);
+      var rot_1 = multiplyHelper(rot1, gettransMatrix(0.8,0,0.5));
+      var toe1Rot = multiplyHelper(rot_1, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe1.setMatrix(toe1Rot);
+
+      var r02 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
+      var rot2 = multiplyHelper(r02, rotateX);
+      var rot_2 = multiplyHelper(rot2, gettransMatrix(0.4,0,0.5));
+      var toe2Rot = multiplyHelper(rot_2, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe2.setMatrix(toe2Rot);
+
+      var r03 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
+      var rot3 = multiplyHelper(r03, rotateX);
+      var rot_3 = multiplyHelper(rot3, gettransMatrix(0,0,0.5));
+      var toe3Rot = multiplyHelper(rot_3, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe3.setMatrix(toe3Rot);
+
+      var r04 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
+      var rot4 = multiplyHelper(r04, rotateX);
+      var rot_4 = multiplyHelper(rot4, gettransMatrix(-0.4,0,0.5));
+      var toe4Rot = multiplyHelper(rot_4, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe4.setMatrix(toe4Rot);
+
+      var r05 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
+      var rot5 = multiplyHelper(r05, rotateX);
+      var rot_5 = multiplyHelper(rot5, gettransMatrix(-0.8,0,0.5));
+      var toe5Rot = multiplyHelper(rot_5, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe5.setMatrix(toe5Rot);
+
+      //BACK TOES
+
+      var r3 = multiplyHelper(frontRpalmtransMtx,rotateX);
+      frontRpalmMtx = multiplyHelper(r3,frontpalmscalMtx);
+      //torso.setMatrix(torsoRotMatrix); 
+      frontRpalm.setMatrix(frontRpalmMtx);
+
+      //rotation of left toes
+      var r06 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
+      var rot6 = multiplyHelper(r06, rotateX);
+      var rot_6 = multiplyHelper(rot6, gettransMatrix(-0.8,0,0.5));
+      var toe6Rot = multiplyHelper(rot_6, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe6.setMatrix(toe6Rot);
+
+
+      var r07 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
+      var rot7 = multiplyHelper(r07, rotateX);
+      var rot_7 = multiplyHelper(rot7, gettransMatrix(-0.4,0,0.5));
+      var toe7Rot = multiplyHelper(rot_7, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe7.setMatrix(toe7Rot);
+
+      var r08 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
+      var rot8 = multiplyHelper(r08, rotateX);
+      var rot_8 = multiplyHelper(rot8, gettransMatrix(0,0,0.5));
+      var toe8Rot = multiplyHelper(rot_8, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe8.setMatrix(toe8Rot);
+
+      var r09 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
+      var rot9 = multiplyHelper(r09, rotateX);
+      var rot_9 = multiplyHelper(rot9, gettransMatrix(0.4,0,0.5));
+      var toe9Rot = multiplyHelper(rot_9, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe9.setMatrix(toe9Rot);
+
+      var r10 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
+      var rot10 = multiplyHelper(r10, rotateX);
+      var rot_10 = multiplyHelper(rot10, gettransMatrix(0.8,0,0.5));
+      var toe10Rot = multiplyHelper(rot_10, frontToescal);
+      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
+      frontToe10.setMatrix(toe10Rot);
+
+      break;
+
+
+
+
 
     default:
       break;
@@ -1215,6 +1434,14 @@ function multiplyHelper(m1,m2){
   return obj;
 }
 
+function getRotToe(x,y,z,m1,r1,m2){
+      var r01 =  multiplyHelper(r1, gettransMatrix(x,y,z-0.5));
+      var rot1 = multiplyHelper(r01, m1);
+      var rot_1 = multiplyHelper(rot1, gettransMatrix(x,y,0.5));
+      var toe1Rot = multiplyHelper(rot_1, m2);
+      return toe1Rot;
+}
+
 // function BacktoOrigin(m1){
 //   var m2 = multiplyHelper(m1, new THREE.Matrix4().set(0,0,0,1));
 //   var m3 = getInversePosition(m2);
@@ -1267,6 +1494,14 @@ keyboard.domElement.addEventListener('keydown',function(event){
  
     else if(keyboard.eventMatches(event,"G")){ 
       (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "G")}  
+
+          else if(keyboard.eventMatches(event,"T")){ 
+      (key == "T")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "T")}
+                else if(keyboard.eventMatches(event,"V")){ 
+      (key == "V")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "V")} 
+
+      else if(keyboard.eventMatches(event,"D")){ 
+      (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "D")}  
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
