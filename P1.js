@@ -1168,48 +1168,58 @@ function updateBody() {
       //   bigtent[index].setMatrix(tmp2);
       // }
 
-      var headorigin = multiplyHelper(head_Matrix, gettransMatrix(0,0,-3));
+      //var headRot = multiplyHelper(torsoMatrix, rotateY);
+
+      var headorigin = multiplyHelper(headMatrix, gettransMatrix(0,0,-3));
       var headRotMatrix = multiplyHelper(headorigin, rotateY);
       var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
-      head.setMatrix(BackheadRotMatrix);
+      var headrot = multiplyHelper(BackheadRotMatrix, headscal);
+      head.setMatrix(headrot);
 
-      var noseRotMatrix1 = multiplyHelper(noseMatrix, gettransMatrix(0,0,-3));
-      var noseRotMatrix2 = multiplyHelper(noseRotMatrix1, rotateY);
-      var noseRotMatrix3 = multiplyHelper(noseRotMatrix2, gettransMatrix(0,0,3));
-      nose.setMatrix(noseRotMatrix3);
-
-      // noseRotMatrix=multiplyHelper(torsoRot,noseMatrix);
-      // nose.setMatrix(noseRotMatrix);
+      var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
+      var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
+      nose.setMatrix(noseRot2);
 
       // noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
       // noseSmallUR.setMatrix(noseSmallURRotMatrix); 
 
-      noseSmallURRotMatrix = multiplyHelper(noseSmallURMatrix, gettransMatrix(0,0,-3));
-      noseSmallURRotMatrix.multiply(rotateY);
-      noseSmallURRotMatrix.multiply(gettransMatrix(0,0,3));
-      noseSmallUR.setMatrix(noseSmallURRotMatrix); 
 
-      // noseSmallULRotMatrix=multiplyHelper(noseSmallULMatrix, gettransMatrix(0,0,-3));
-      // noseSmallULRotMatrix.multiply(rotateY);
-      // noseSmallULRotMatrix.multiply(gettransMatrix(0,0,3));
-      // noseSmallUL.setMatrix(noseSmallULRotMatrix); 
-
-      // noseSmallULRotMatrix=multiplyHelper(torsoRot,noseSmallULMatrix);
-      // noseSmallUL.setMatrix(noseSmallULRotMatrix); 
-
-      // noseSmallDRRotMatrix=multiplyHelper(torsoRot,noseSmallDRMatrix);
-      // noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
-
-      // noseSmallDLRotMatrix=multiplyHelper(torsoRot,noseSmallDLMatrix);
-      // noseSmallDL.setMatrix(noseSmallDLRotMatrix);   
+      var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
+      var noseSmallURRot2 = multiplyHelper(noseSmallURRot1, noseSmallscalMatrix);
+      noseSmallUR.setMatrix(noseSmallURRot2);
 
 
+      var noseSmallULRot1 = multiplyHelper(noseRot1, gettransMatrix(-0.5,1.5,0.75));
+      var noseSmallULRot2 = multiplyHelper(noseSmallULRot1, noseSmallscalMatrix);
+      noseSmallUL.setMatrix(noseSmallULRot2); 
 
+      var noseSmallDRRot1 = multiplyHelper(noseRot1,gettransMatrix(0,-1.5,0.75));
+      var noseSmallDRRot2 = multiplyHelper(noseSmallDRRot1, noseSmallscalMatrix);
+      noseSmallDR.setMatrix(noseSmallDRRot2); 
+
+      var noseSmallDLRot1 = multiplyHelper(noseRot1,gettransMatrix(-0.5,-1.5,0.75));
+      var noseSmallDLRot2 = multiplyHelper(noseSmallDLRot1, noseSmallscalMatrix);
+      noseSmallDL.setMatrix(noseSmallDLRot2); 
+
+      for(var index = 1; index <= bigtentl.length; index++){
+        var tentlRot1 = multiplyHelper(noseRot1,gettransMatrix(3,1.2-0.25*index,0.8));
+        var tentlRot2 = multiplyHelper(tentlRot1, scaltentMatrix);
+        bigtentl[index-1].setMatrix(tentlRot2);
+      }
+
+
+      for(var index = 1; index <= bigtentr.length; index++){
+        var tentrRot1 = multiplyHelper(noseRot1,gettransMatrix(-3,1.2-0.25*index,0.8));
+        var tentrRot2 = multiplyHelper(tentrRot1, scaltentMatrix);
+        bigtentr[index-1].setMatrix(tentrRot2);
+      }
       // for(var index =  Math.floor(4*fbody.length/7) ; index < fbody.length; index++){
       // var tmp3 = multiplyHelper(torsoRot,fTransBodyMatrixs[index]);
       // var tmp4 = multiplyHelper(tmp3,fScalBodyMatrixs[index]);
       // fbody[index].setMatrix(tmp4);
       // }
+
+
       break;
 
 
@@ -1226,10 +1236,58 @@ function updateBody() {
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
       var rotateY = getRotMatrix(-p,"y"); 
-      var headorigin = multiplyHelper(head_Matrix, gettransMatrix(0,0,-3));
+
+      // for(var index = 0; index < noseinterMatrix.length; index++){
+      //   var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
+      //   var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
+      //   bigtent[index].setMatrix(tmp2);
+      // }
+
+      //var headRot = multiplyHelper(torsoMatrix, rotateY);
+
+      var headorigin = multiplyHelper(headMatrix, gettransMatrix(0,0,-3));
       var headRotMatrix = multiplyHelper(headorigin, rotateY);
       var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
-      head.setMatrix(BackheadRotMatrix);
+      var headrot = multiplyHelper(BackheadRotMatrix, headscal);
+      head.setMatrix(headrot);
+
+      var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
+      var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
+      nose.setMatrix(noseRot2);
+
+      // noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
+      // noseSmallUR.setMatrix(noseSmallURRotMatrix); 
+
+
+      var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
+      var noseSmallURRot2 = multiplyHelper(noseSmallURRot1, noseSmallscalMatrix);
+      noseSmallUR.setMatrix(noseSmallURRot2);
+
+
+      var noseSmallULRot1 = multiplyHelper(noseRot1, gettransMatrix(-0.5,1.5,0.75));
+      var noseSmallULRot2 = multiplyHelper(noseSmallULRot1, noseSmallscalMatrix);
+      noseSmallUL.setMatrix(noseSmallULRot2); 
+
+      var noseSmallDRRot1 = multiplyHelper(noseRot1,gettransMatrix(0,-1.5,0.75));
+      var noseSmallDRRot2 = multiplyHelper(noseSmallDRRot1, noseSmallscalMatrix);
+      noseSmallDR.setMatrix(noseSmallDRRot2); 
+
+      var noseSmallDLRot1 = multiplyHelper(noseRot1,gettransMatrix(-0.5,-1.5,0.75));
+      var noseSmallDLRot2 = multiplyHelper(noseSmallDLRot1, noseSmallscalMatrix);
+      noseSmallDL.setMatrix(noseSmallDLRot2); 
+
+      for(var index = 1; index <= bigtentl.length; index++){
+        var tentlRot1 = multiplyHelper(noseRot1,gettransMatrix(3,1.2-0.25*index,0.8));
+        var tentlRot2 = multiplyHelper(tentlRot1, scaltentMatrix);
+        bigtentl[index-1].setMatrix(tentlRot2);
+      }
+
+
+      for(var index = 1; index <= bigtentr.length; index++){
+        var tentrRot1 = multiplyHelper(noseRot1,gettransMatrix(-3,1.2-0.25*index,0.8));
+        var tentrRot2 = multiplyHelper(tentrRot1, scaltentMatrix);
+        bigtentr[index-1].setMatrix(tentrRot2);
+      }
 
       break;
 
