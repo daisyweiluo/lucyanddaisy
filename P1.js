@@ -261,7 +261,7 @@ var nosematrix = multiplyHelper(headMatrix, nosetransMatrix);
 var noseMatrix=multiplyHelper(nosematrix,nosescalMatrix);
 
 //SMALL NOSE TENTACLES
-var noseSmallscalMatrix = getscaleMatrix(0.05,0.3,0.05);
+var noseSmallscalMatrix = getscaleMatrix(0.05,0.2,0.05);
 var noseSmallURtransMatrix = multiplyHelper(nosematrix,gettransMatrix(0,1.5,0.75));
 var noseSmallULtransMatrix = multiplyHelper(nosematrix,gettransMatrix(-0.5,1.5,0.75));
 var noseSmallDRtransMatrix = multiplyHelper(nosematrix,gettransMatrix(0,-1.5,0.75));
@@ -270,22 +270,6 @@ var noseSmallURMatrix=multiplyHelper(noseSmallURtransMatrix,noseSmallscalMatrix)
 var noseSmallULMatrix=multiplyHelper(noseSmallULtransMatrix,noseSmallscalMatrix);
 var noseSmallDRMatrix=multiplyHelper(noseSmallDRtransMatrix,noseSmallscalMatrix);
 var noseSmallDLMatrix=multiplyHelper(noseSmallDLtransMatrix,noseSmallscalMatrix);
-
-// BIG NOSE TENTACLES
-// var rotateBig = new THREE.Matrix4().set(1,        0,         0,        0, 
-//                                         0, Math.cos(-20),-Math.sin(-20), 0, 
-//                                         0, Math.sin(-20), Math.cos(-20), 0,
-//                                         0,        0,         0,        1);
-// var noseBigscalMatrix=getscaleMatrix(0.05,0.5,0.05);
-// var noseBigURtransMatrix = gettransMatrix(0,3,18.5);
-// var rotateBig = new THREE.Matrix4().set(Math.cos(40), -Math.sin(40), 0, 0, 
-//                                         Math.sin(40), Math.cos(40), 0, 0, 
-//                                         0, 0,1, 0,
-//                                         0, 0, 0, 1);
-// var noseBiginterMatrix=multiplyHelper(rotateBig,noseBigURtransMatrix);
-// var noseBigMatrix=multiplyHelper(noseBiginterMatrix,noseBigscalMatrix);
-
-
 
 // TO-DO: INITIALIZE THE REST OF YOUR MATRICES 
 // Note: Use of parent attribute is not allowed.
@@ -1129,7 +1113,8 @@ function updateBody() {
 
       var rotateY = getRotMatrix(2*p,"y");
       var rotateL = getRotMatrix(-2*p,"y");
-
+      var rotateD = getRotMatrix(2*p,"x");
+      var rotateU = getRotMatrix(-2*p,"x");
 
       for(var i = 0; i < bigtentl.length; i++){
          var tmp=multiplyHelper(bigtentlmatrix[i],gettransMatrix(-2,-1.2+0.25*lcount,-0.8));
@@ -1146,6 +1131,22 @@ function updateBody() {
         var tmp3=multiplyHelper(tmp2,scaltentMatrix);
         bigtentr[i].setMatrix(tmp3);
       }
+
+        var tmp=multiplyHelper(noseSmallURtransMatrix,rotateD);
+        var tmp1=multiplyHelper(tmp,noseSmallscalMatrix);    
+        noseSmallUR.setMatrix(tmp1);
+
+        var tmp=multiplyHelper(noseSmallULtransMatrix,rotateD);
+        var tmp1=multiplyHelper(tmp,noseSmallscalMatrix);    
+        noseSmallUL.setMatrix(tmp1);
+
+        var tmp=multiplyHelper(noseSmallDRtransMatrix,rotateU);
+        var tmp1=multiplyHelper(tmp,noseSmallscalMatrix);    
+        noseSmallDR.setMatrix(tmp1);
+
+        var tmp=multiplyHelper(noseSmallDLtransMatrix,rotateU);
+        var tmp1=multiplyHelper(tmp,noseSmallscalMatrix);    
+        noseSmallDL.setMatrix(tmp1);    
 
       break;
 
