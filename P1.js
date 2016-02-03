@@ -445,42 +445,97 @@ scene.add(frontToe9);
 scene.add(frontToe10);
 
 
-// //HEAD LOOP
-// var hcount = 1; 
-// var hpos = 5;
-// var ScalHeadMatrixs =[];
-// var TransHeadMatrixs = [];
-// var heads = [];
+function resetFcn(){
+  head.setMatrix(head_Matrix);
+  torso.setMatrix(torsotrans);
+  Lleg.setMatrix(LlegMatrix);
+  Rleg.setMatrix(RlegMatrix);
+  Lsmlleg.setMatrix(LsmllegMatrix);
+  Rsmlleg.setMatrix(RsmllegMatrix);
+  Llowerleg.setMatrix(LlowerlegMatrix);
+  Rlowerleg.setMatrix(RlowerlegMatrix);
+  Lpalm.setMatrix(LpalmMtx);
+  Rpalm.setMatrix(RpalmMtx);
 
-// while (hcount <= 20){
-//   var h = 1*(1-0.05*hcount);
-//   var scalheadMatrix = new THREE.Matrix4().set(h,0,0,0, 
-//                                                 0,h,0,0, 
-//                                                 0,0,h,0, 
-//                                                 0,0,0,1);
-//   ScalHeadMatrixs.push(scalheadMatrix);
-//   hpos+=h*(1-0.1);
-//   var transheadMatrix = gettransMatrix(0,0,hpos);
-//   TransHeadMatrixs.push(transheadMatrix);
+  frontLleg.setMatrix(frontLMatrix);
+  frontRleg.setMatrix(frontRMatrix);
 
-//   var LoopHeadMatrix = multiplyHelper(transheadMatrix,scalheadMatrix);
-//   var LoopHead = new THREE.Mesh(torsoGeometry,normalMaterial);
-//   heads.push(LoopHead);
-//   LoopHead.setMatrix(LoopHeadMatrix);
-//   scene.add(LoopHead);
-//   hcount++;
-// }
+  frontLLleg.setMatrix(frontLLMatrix);
+  frontRLleg.setMatrix(frontRLMatrix);
+
+  frontLpalm.setMatrix(frontLpalmMtx);
+  frontRpalm.setMatrix(frontRpalmMtx);
+
+  backToe1.setMatrix(backToe1Matrix);
+  backToe2.setMatrix(backToe2Matrix);
+  backToe3.setMatrix(backToe3Matrix);
+  backToe4.setMatrix(backToe4Matrix);
+  backToe5.setMatrix(backToe5Matrix);
+  backToe6.setMatrix(backToe6Matrix);
+  backToe7.setMatrix(backToe7Matrix);
+  backToe8.setMatrix(backToe8Matrix);
+  backToe9.setMatrix(backToe9Matrix);
+  backToe10.setMatrix(backToe10Matrix);
+
+  frontToe1.setMatrix(frontToe1Matrix);
+  frontToe2.setMatrix(frontToe2Matrix);
+  frontToe3.setMatrix(frontToe3Matrix); 
+  frontToe4.setMatrix(frontToe4Matrix);
+  frontToe5.setMatrix(frontToe5Matrix);
+  frontToe6.setMatrix(frontToe6Matrix);
+  frontToe7.setMatrix(frontToe7Matrix);
+  frontToe8.setMatrix(frontToe8Matrix);
+  frontToe9.setMatrix(frontToe9Matrix);
+  frontToe10.setMatrix(frontToe10Matrix);
+
+
+  nose.setMatrix(noseMatrix);
+  noseSmallUR.setMatrix(noseSmallURMatrix);
+  noseSmallUL.setMatrix(noseSmallULMatrix);
+  noseSmallDR.setMatrix(noseSmallDRMatrix);
+  noseSmallDL.setMatrix(noseSmallDLMatrix);
+
+  var i=0;
+  var j=0;
+  while (i < 9){
+    bigtentl[i].setMatrix(bigtentlMatrix[i]);
+    i++;
+  }
+
+  while (j < 9){
+    bigtentr[j].setMatrix(bigtentrMatrix[j]);
+    j++;
+  }
+
+  var bcount=0;
+  while(bcount < body.length ){
+      body[bcount].setMatrix(bodyMatrix[bcount]);
+      fbody[bcount].setMatrix(fbodyMatrix[bcount]);
+      bcount++;
+  }
+
+  var m=0;
+  while(m < tails.length ){
+      tails[m].setMatrix(tailMatrixs[m]);
+      tails[m].setMatrix(tailMatrixs[m]);
+      m++;
+  }
+
+}
+
 
 //BACK BODY LOOP
 var bcount = 1;
 var origin = 4;
 var ScalBodyMatrixs = [];
 var TransBodyMatrixs = [];
+var bodyMatrix=[];
 var body = [];
 
 var forigin = 4;
 var fScalBodyMatrixs = [];
 var fTransBodyMatrixs = [];
+var fbodyMatrix = [];
 var fbody = [];
 
 while(bcount < 100 ){
@@ -497,10 +552,11 @@ while(bcount < 100 ){
   var transbodyMatrix = multiplyHelper(torsoMatrix, gettransMatrix(0,0,origin));
   TransBodyMatrixs.push(transbodyMatrix);
   var LoopBodyMatrix = multiplyHelper(transbodyMatrix,scalbodyMatrix);
+  bodyMatrix.push(LoopBodyMatrix);
 
   var LoopBody = new THREE.Mesh(torsoGeometry,normalMaterial);
-  body.push(LoopBody);
   LoopBody.setMatrix(LoopBodyMatrix);
+  body.push(LoopBody);
   scene.add(LoopBody);
 
   //HEAD
@@ -516,10 +572,10 @@ while(bcount < 100 ){
   var ftransbodyMatrix = multiplyHelper(torsoMatrix, gettransMatrix(0,0,forigin));
   fTransBodyMatrixs.push(ftransbodyMatrix);
   var fLoopBodyMatrix = multiplyHelper(ftransbodyMatrix,fscalbodyMatrix);
-
+  fbodyMatrix.push(fLoopBodyMatrix);
   var fLoopBody = new THREE.Mesh(torsoGeometry,normalMaterial);
-  fbody.push(fLoopBody);
   fLoopBody.setMatrix(fLoopBodyMatrix);
+  fbody.push(fLoopBody);
   scene.add(fLoopBody);
 
   bcount++;
@@ -675,6 +731,7 @@ var animate = false; // animate?
 // Initializes parameters and sets animate flag to true.
 // Input: start position or angle, end position or angle, and total time of animation.
 function init_animation(p_start,p_end,t_length){
+  resetFcn();
   p0 = p_start;
   p1 = p_end;
   time_length = t_length;
