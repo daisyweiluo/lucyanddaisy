@@ -1497,15 +1497,15 @@ function updateBody() {
 }
       var rotateX = getRotMatrix(p,"x"); 
 
-      var headorigin = multiplyHelper(frontLtransMatrix, gettransMatrix(0,0,-3));
-      var headRotMatrix = multiplyHelper(headorigin, rotateY);
-      var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
-      var headrot = multiplyHelper(BackheadRotMatrix, headscal);
-      head.setMatrix(headrot);
+      // var headorigin = multiplyHelper(frontLtransMatrix, gettransMatrix(0,0,-3));
+      // var headRotMatrix = multiplyHelper(headorigin, rotateY);
+      // var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
+      // var headrot = multiplyHelper(BackheadRotMatrix, headscal);
+      // head.setMatrix(headrot);
 
-      var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
-      var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
-      nose.setMatrix(noseRot2);
+      // var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
+      // var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
+      // nose.setMatrix(noseRot2);
 
       // var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
       // var noseSmallURRot2 = multiplyHelper(noseSmallURRot1, noseSmallscalMatrix);
