@@ -1112,10 +1112,11 @@ function updateBody() {
       backToe5Matrix = multiplyHelper(r10, backToescal);
       backToe5.setMatrix(backToe5Matrix);
 
-
+      break;
 
       case(key == "N" && animate):
-      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
+
+       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
       if (time > time_end){
         p = p1;
@@ -1127,20 +1128,24 @@ function updateBody() {
 
 
       var rotateY = getRotMatrix(2*p,"y");
+      var rotateL = getRotMatrix(-2*p,"y");
 
-      // for(var index = 0; index < bigtentl.length; index++){
-      //   var tmp=multiplyHelper(bigtentlMatrix[index],gettransMatrix(-3,-1.2,-0.8));
-      //   //bigtentlMatrix[index].multiply(gettransMatrix(-3,-1.2+0.25*(index+1),-0.8));
-      //   var tmp1=multiplyHelper(tmp,rotateY);
-      //   var tmp2=multiplyHelper(tmp1,gettransMatrix(3,1.2-0.25,0.8));        
-      //   //bigtentlMatrix[index].multiply(gettransMatrix(3,1.2-0.25*(index+1),0.8));
-      //   bigtentl[index].setMatrix(tmp2);
-      // }
 
-      // for(var index = 0; index < bigtentr.length; index++){
-      //   var BigtentRotMatrix = multiplyHelper(nosematrix,bigtentrMatrix[index]);
-      //   bigtentr[index].setMatrix(BigtentRotMatrix);
-      // }
+      for(var i = 0; i < bigtentl.length; i++){
+         var tmp=multiplyHelper(bigtentlmatrix[i],gettransMatrix(-2,-1.2+0.25*lcount,-0.8));
+        var tmp1=multiplyHelper(tmp,rotateY);
+        var tmp2= multiplyHelper(tmp1,gettransMatrix(2,1.2-0.25*lcount,0.8));
+        var tmp3=multiplyHelper(tmp2,scaltentMatrix);
+        bigtentl[i].setMatrix(tmp3);
+      }
+
+      for(var i = 0; i < bigtentr.length; i++){
+         var tmp=multiplyHelper(bigtentrmatrix[i],gettransMatrix(2,-1.2+0.25*lcount,-0.8));
+        var tmp1=multiplyHelper(tmp,rotateL);
+        var tmp2= multiplyHelper(tmp1,gettransMatrix(-2,1.2-0.25*lcount,0.8));
+        var tmp3=multiplyHelper(tmp2,scaltentMatrix);
+        bigtentr[i].setMatrix(tmp3);
+      }
 
       break;
 
