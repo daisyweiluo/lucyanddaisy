@@ -11,7 +11,7 @@ THREE.Object3D.prototype.setMatrix = function(a) {
 var canvas = document.getElementById('canvas');
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xFFFFFF); // white background colour
+renderer.setClearColor(0xC7F49F); // white background colour
 canvas.appendChild(renderer.domElement);
 
 // SETUP CAMERA
@@ -1238,14 +1238,6 @@ function updateBody() {
 
       var rotateY = getRotMatrix(-p,"y"); 
 
-      // for(var index = 0; index < noseinterMatrix.length; index++){
-      //   var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
-      //   var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
-      //   bigtent[index].setMatrix(tmp2);
-      // }
-
-      //var headRot = multiplyHelper(torsoMatrix, rotateY);
-
       var headorigin = multiplyHelper(headMatrix, gettransMatrix(0,0,-3));
       var headRotMatrix = multiplyHelper(headorigin, rotateY);
       var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
@@ -1255,10 +1247,6 @@ function updateBody() {
       var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
       var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
       nose.setMatrix(noseRot2);
-
-      // noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
-      // noseSmallUR.setMatrix(noseSmallURRotMatrix); 
-
 
       var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
       var noseSmallURRot2 = multiplyHelper(noseSmallURRot1, noseSmallscalMatrix);
@@ -1441,7 +1429,30 @@ function updateBody() {
 
       break;
 
+      //SWIMMING
+      case(key == "S" && animate):
+      var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
+      if (time > time_end){
+        p = p1;
+        animate = false;
+        break;
+}
+      var rotateX = getRotMatrix(p,"x"); 
+
+      var headorigin = multiplyHelper(frontLtransMatrix, gettransMatrix(0,0,-3));
+      var headRotMatrix = multiplyHelper(headorigin, rotateY);
+      var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
+      var headrot = multiplyHelper(BackheadRotMatrix, headscal);
+      head.setMatrix(headrot);
+
+      var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
+      var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
+      nose.setMatrix(noseRot2);
+
+      // var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
+      // var noseSmallURRot2 = multiplyHelper(noseSmallURRot1, noseSmallscalMatrix);
+      // noseSmallUR.setMatrix(noseSmallURRot2);
 
 
 
@@ -1559,13 +1570,16 @@ keyboard.domElement.addEventListener('keydown',function(event){
     else if(keyboard.eventMatches(event,"G")){ 
       (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "G")}  
 
-          else if(keyboard.eventMatches(event,"T")){ 
+      else if(keyboard.eventMatches(event,"T")){ 
       (key == "T")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "T")}
                 else if(keyboard.eventMatches(event,"V")){ 
       (key == "V")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "V")} 
 
       else if(keyboard.eventMatches(event,"D")){ 
       (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "D")}  
+
+      else if(keyboard.eventMatches(event,"S")){ 
+      (key == "S")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "S")}  
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
