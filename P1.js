@@ -1505,7 +1505,6 @@ function updateBody() {
       var fronttoe5_2 = multiplyHelper(fronttoe5_1, frontToescal);
       frontToe5.setMatrix(fronttoe5_2);
 
-
       var back_r1 = multiplyHelper(RlegtransMatrix, gettransMatrix(1,1,1));
       var back_r2 = multiplyHelper(back_r1, rotateX);
       var back_r3 = multiplyHelper(back_r2, gettransMatrix(-1,-1,-1));
@@ -1608,7 +1607,7 @@ function updateBody() {
       backToe2.setMatrix(backtoe2_2);
 
       var backtoe3_1 = multiplyHelper(backpalmL1, gettransMatrix(0,-0.1,1.5));
-      var backtoe3_2 = multiplyHelper(backtoe8_1, backToescal);
+      var backtoe3_2 = multiplyHelper(backtoe3_1, backToescal);
       backToe3.setMatrix(backtoe3_2);
 
       var backtoe4_1 = multiplyHelper(backpalmL1, gettransMatrix(-0.2,-0.1,1.5));
