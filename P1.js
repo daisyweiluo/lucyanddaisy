@@ -1495,21 +1495,159 @@ function updateBody() {
         animate = false;
         break;
 }
-      var rotateX = getRotMatrix(p,"x"); 
 
-      // var headorigin = multiplyHelper(frontLtransMatrix, gettransMatrix(0,0,-3));
-      // var headRotMatrix = multiplyHelper(headorigin, rotateY);
-      // var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
-      // var headrot = multiplyHelper(BackheadRotMatrix, headscal);
-      // head.setMatrix(headrot);
+      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
-      // var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
-      // var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
-      // nose.setMatrix(noseRot2);
+      var rotateX = getRotMatrix(-p,"x"); 
 
-      // var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
-      // var noseSmallURRot2 = multiplyHelper(noseSmallURRot1, noseSmallscalMatrix);
-      // noseSmallUR.setMatrix(noseSmallURRot2);
+      //FRONT LEFT LEG AND BACK RIGHT LEG
+      var r1 = multiplyHelper(frontLtransMatrix, gettransMatrix(-1,1,-1));
+      var r2 = multiplyHelper(r1, rotateX);
+      var r3 = multiplyHelper(r2, gettransMatrix(1,-1,1));
+      var r4 = multiplyHelper(r3, frontscalMatrix);
+      frontLleg.setMatrix(r4);
+
+      var frontknee1 = multiplyHelper(r3, gettransMatrix(0,-1,0));
+      var frontknee2 = multiplyHelper(frontknee1, frontLscalMatrix);
+      frontLLleg.setMatrix(frontknee2);
+
+      var frontpalm1 = multiplyHelper(r3, frontLpalmMatrix);
+      var frontpalm2 = multiplyHelper(frontpalm1, frontpalmscalMtx);
+      frontLpalm.setMatrix(frontpalm2);
+
+      var fronttoe1_1 = multiplyHelper(frontpalm1, gettransMatrix(0.8,0,1.5));
+      var fronttoe1_2 = multiplyHelper(fronttoe1_1, frontToescal);
+      frontToe1.setMatrix(fronttoe1_2);
+
+      var fronttoe2_1 = multiplyHelper(frontpalm1, gettransMatrix(0.4,0,1.5));
+      var fronttoe2_2 = multiplyHelper(fronttoe2_1, frontToescal);
+      frontToe2.setMatrix(fronttoe2_2);
+
+      var fronttoe3_1 = multiplyHelper(frontpalm1, gettransMatrix(0,0,1.5));
+      var fronttoe3_2 = multiplyHelper(fronttoe3_1, frontToescal);
+      frontToe3.setMatrix(fronttoe3_2);
+
+      var fronttoe4_1 = multiplyHelper(frontpalm1, gettransMatrix(-0.4,0,1.5));
+      var fronttoe4_2 = multiplyHelper(fronttoe4_1, frontToescal);
+      frontToe4.setMatrix(fronttoe4_2);
+
+      var fronttoe5_1 = multiplyHelper(frontpalm1, gettransMatrix(-0.8,0,1.5));
+      var fronttoe5_2 = multiplyHelper(fronttoe5_1, frontToescal);
+      frontToe5.setMatrix(fronttoe5_2);
+
+
+      var back_r1 = multiplyHelper(RlegtransMatrix, gettransMatrix(1,1,1));
+      var back_r2 = multiplyHelper(back_r1, rotateX);
+      var back_r3 = multiplyHelper(back_r2, gettransMatrix(-1,-1,-1));
+      var back_r4 = multiplyHelper(back_r3, legscalMatrix);
+      Rleg.setMatrix(back_r4);
+
+      var backknee1 = multiplyHelper(back_r3, gettransMatrix(0.2,-1.5,0));
+      var backknee2 = multiplyHelper(backknee1, smllegscalMatrix);
+      Rsmlleg.setMatrix(backknee2);
+
+      var backpalm1 = multiplyHelper(back_r3, backRpalmMatrix);
+      var backpalm2 = multiplyHelper(backpalm1, palmscalMtx);
+      Rpalm.setMatrix(backpalm2);
+
+      var backlowerknee1 = multiplyHelper(back_r3, gettransMatrix(0.2,-2.2,0));
+      var backlowerknee2 = multiplyHelper(backlowerknee1, lowerlegscalMatrix);
+      Rlowerleg.setMatrix(backlowerknee2);
+
+      var backtoe6_1 = multiplyHelper(backpalm1, gettransMatrix(-0.4,-0.1,1.5));
+      var backtoe6_2 = multiplyHelper(backtoe6_1, backToescal);
+      backToe6.setMatrix(backtoe6_2);
+
+      var backtoe7_1 = multiplyHelper(backpalm1, gettransMatrix(-0.2,-0.1,1.5));
+      var backtoe7_2 = multiplyHelper(backtoe7_1, backToescal);
+      backToe7.setMatrix(backtoe7_2);
+
+      var backtoe8_1 = multiplyHelper(backpalm1, gettransMatrix(0,-0.1,1.5));
+      var backtoe8_2 = multiplyHelper(backtoe8_1, backToescal);
+      backToe8.setMatrix(backtoe8_2);
+
+      var backtoe9_1 = multiplyHelper(backpalm1, gettransMatrix(0.2,-0.1,1.5));
+      var backtoe9_2 = multiplyHelper(backtoe9_1, backToescal);
+      backToe9.setMatrix(backtoe9_2);
+
+      var backtoe10_1 = multiplyHelper(backpalm1, gettransMatrix(0.4,-0.1,1.5));
+      var backtoe10_2 = multiplyHelper(backtoe10_1, backToescal);
+      backToe10.setMatrix(backtoe10_2);
+
+      // FRONT RIGHT LEG AND BACK LEFT LEG
+      var rotateY = getRotMatrix(p,"x"); 
+      var r1_R = multiplyHelper(frontRtransMatrix, gettransMatrix(-1,1,-1));
+      var r2_R = multiplyHelper(r1_R, rotateY);
+      var r3_R = multiplyHelper(r2_R, gettransMatrix(1,-1,1));
+      var r4_R = multiplyHelper(r3_R, frontscalMatrix);
+      frontRleg.setMatrix(r4_R);
+
+      var frontkneeR1 = multiplyHelper(r3_R, gettransMatrix(0,-1,0));
+      var frontkneeR2 = multiplyHelper(frontkneeR1, frontLscalMatrix);
+      frontRLleg.setMatrix(frontkneeR2);
+
+      var frontpalmR1 = multiplyHelper(r3_R, frontRpalmMatrix);
+      var frontpalmR2 = multiplyHelper(frontpalmR1, frontpalmscalMtx);
+      frontRpalm.setMatrix(frontpalmR2);
+
+      var fronttoe6_1 = multiplyHelper(frontpalmR1, gettransMatrix(-0.8,0,1.5));
+      var fronttoe6_2 = multiplyHelper(fronttoe6_1, frontToescal);
+      frontToe6.setMatrix(fronttoe6_2);
+
+      var fronttoe7_1 = multiplyHelper(frontpalmR1, gettransMatrix(-0.4,0,1.5));
+      var fronttoe7_2 = multiplyHelper(fronttoe7_1, frontToescal);
+      frontToe7.setMatrix(fronttoe7_2);
+
+      var fronttoe8_1 = multiplyHelper(frontpalmR1, gettransMatrix(0,0,1.5));
+      var fronttoe8_2 = multiplyHelper(fronttoe8_1, frontToescal);
+      frontToe8.setMatrix(fronttoe8_2);
+
+      var fronttoe9_1 = multiplyHelper(frontpalmR1, gettransMatrix(0.4,0,1.5));
+      var fronttoe9_2 = multiplyHelper(fronttoe9_1, frontToescal);
+      frontToe9.setMatrix(fronttoe9_2);
+
+      var fronttoe10_1 = multiplyHelper(frontpalmR1, gettransMatrix(0.8,0,1.5));
+      var fronttoe10_2 = multiplyHelper(fronttoe10_1, frontToescal);
+      frontToe10.setMatrix(fronttoe10_2);
+
+
+      var back_l1 = multiplyHelper(LlegtransMatrix, gettransMatrix(1,1,1));
+      var back_l2 = multiplyHelper(back_l1, rotateY);
+      var back_l3 = multiplyHelper(back_l2, gettransMatrix(-1,-1,-1));
+      var back_l4 = multiplyHelper(back_l3, legscalMatrix);
+      Lleg.setMatrix(back_l4);
+
+      var backkneeL1 = multiplyHelper(back_l3, gettransMatrix(0.2,-1.5,0));
+      var backkneeL2 = multiplyHelper(backkneeL1, smllegscalMatrix);
+      Lsmlleg.setMatrix(backkneeL2);
+
+      var backpalmL1 = multiplyHelper(back_l3, backLpalmMatrix);
+      var backpalmL2 = multiplyHelper(backpalmL1, palmscalMtx);
+      Lpalm.setMatrix(backpalmL2);
+
+      var backlowerkneeL1 = multiplyHelper(back_l3, gettransMatrix(0.2,-2.2,0));
+      var backlowerkneeL2 = multiplyHelper(backlowerkneeL1, lowerlegscalMatrix);
+      Llowerleg.setMatrix(backlowerkneeL2);
+
+      var backtoe1_1 = multiplyHelper(backpalmL1, gettransMatrix(0.4,-0.1,1.5));
+      var backtoe1_2 = multiplyHelper(backtoe1_1, backToescal);
+      backToe1.setMatrix(backtoe1_2);
+
+      var backtoe2_1 = multiplyHelper(backpalmL1, gettransMatrix(0.2,-0.1,1.5));
+      var backtoe2_2 = multiplyHelper(backtoe2_1, backToescal);
+      backToe2.setMatrix(backtoe2_2);
+
+      var backtoe3_1 = multiplyHelper(backpalmL1, gettransMatrix(0,-0.1,1.5));
+      var backtoe3_2 = multiplyHelper(backtoe8_1, backToescal);
+      backToe3.setMatrix(backtoe3_2);
+
+      var backtoe4_1 = multiplyHelper(backpalmL1, gettransMatrix(-0.2,-0.1,1.5));
+      var backtoe4_2 = multiplyHelper(backtoe4_1, backToescal);
+      backToe4.setMatrix(backtoe4_2);
+
+      var backtoe5_1 = multiplyHelper(backpalmL1, gettransMatrix(-0.4,-0.1,1.5));
+      var backtoe5_2 = multiplyHelper(backtoe5_1, backToescal);
+      backToe5.setMatrix(backtoe5_2);
 
 
 
