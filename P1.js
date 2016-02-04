@@ -1182,12 +1182,6 @@ function updateBody() {
 
       var rotateY = getRotMatrix(p,"y"); 
 
-      // for(var index = 0; index < noseinterMatrix.length; index++){
-      //   var tmp1 = multiplyHelper(noseinterMatrix[index],rotateY);
-      //   var tmp2 = multiplyHelper(tmp1,scaltentMatrix);
-      //   bigtent[index].setMatrix(tmp2);
-      // }
-
       //var headRot = multiplyHelper(torsoMatrix, rotateY);
 
       var headorigin = multiplyHelper(headMatrix, gettransMatrix(0,0,-3));
@@ -1199,9 +1193,6 @@ function updateBody() {
       var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
       var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
       nose.setMatrix(noseRot2);
-
-      // noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
-      // noseSmallUR.setMatrix(noseSmallURRotMatrix); 
 
 
       var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
@@ -1233,11 +1224,7 @@ function updateBody() {
         var tentrRot2 = multiplyHelper(tentrRot1, scaltentMatrix);
         bigtentr[index-1].setMatrix(tentrRot2);
       }
-      // for(var index =  Math.floor(4*fbody.length/7) ; index < fbody.length; index++){
-      // var tmp3 = multiplyHelper(torsoRot,fTransBodyMatrixs[index]);
-      // var tmp4 = multiplyHelper(tmp3,fScalBodyMatrixs[index]);
-      // fbody[index].setMatrix(tmp4);
-      // }
+
 
 
       break;
@@ -1361,9 +1348,7 @@ function updateBody() {
 
       //rotation of left palm
       var r2 = multiplyHelper(frontLpalmtransMtx,rotateX);
-      //var r2rot = multiplyHelper(frontLpalmtransMtx,rotateXX);
       frontLpalmMtx = multiplyHelper(r2,frontpalmscalMtx);
-      //torso.setMatrix(torsoRotMatrix); 
       frontLpalm.setMatrix(frontLpalmMtx);
 
       //rotation of left toes
@@ -1371,42 +1356,36 @@ function updateBody() {
       var rot1 = multiplyHelper(r01, rotateX);
       var rot_1 = multiplyHelper(rot1, gettransMatrix(0.8,0,0.5));
       var toe1Rot = multiplyHelper(rot_1, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe1.setMatrix(toe1Rot);
 
       var r02 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
       var rot2 = multiplyHelper(r02, rotateX);
       var rot_2 = multiplyHelper(rot2, gettransMatrix(0.4,0,0.5));
       var toe2Rot = multiplyHelper(rot_2, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe2.setMatrix(toe2Rot);
 
       var r03 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
       var rot3 = multiplyHelper(r03, rotateX);
       var rot_3 = multiplyHelper(rot3, gettransMatrix(0,0,0.5));
       var toe3Rot = multiplyHelper(rot_3, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe3.setMatrix(toe3Rot);
 
       var r04 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
       var rot4 = multiplyHelper(r04, rotateX);
       var rot_4 = multiplyHelper(rot4, gettransMatrix(-0.4,0,0.5));
       var toe4Rot = multiplyHelper(rot_4, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe4.setMatrix(toe4Rot);
 
       var r05 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
       var rot5 = multiplyHelper(r05, rotateX);
       var rot_5 = multiplyHelper(rot5, gettransMatrix(-0.8,0,0.5));
       var toe5Rot = multiplyHelper(rot_5, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe5.setMatrix(toe5Rot);
 
       //BACK TOES
 
       var r3 = multiplyHelper(frontRpalmtransMtx,rotateX);
       frontRpalmMtx = multiplyHelper(r3,frontpalmscalMtx);
-      //torso.setMatrix(torsoRotMatrix); 
       frontRpalm.setMatrix(frontRpalmMtx);
 
       //rotation of left toes
@@ -1414,7 +1393,6 @@ function updateBody() {
       var rot6 = multiplyHelper(r06, rotateX);
       var rot_6 = multiplyHelper(rot6, gettransMatrix(-0.8,0,0.5));
       var toe6Rot = multiplyHelper(rot_6, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe6.setMatrix(toe6Rot);
 
 
@@ -1422,28 +1400,24 @@ function updateBody() {
       var rot7 = multiplyHelper(r07, rotateX);
       var rot_7 = multiplyHelper(rot7, gettransMatrix(-0.4,0,0.5));
       var toe7Rot = multiplyHelper(rot_7, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe7.setMatrix(toe7Rot);
 
       var r08 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
       var rot8 = multiplyHelper(r08, rotateX);
       var rot_8 = multiplyHelper(rot8, gettransMatrix(0,0,0.5));
       var toe8Rot = multiplyHelper(rot_8, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe8.setMatrix(toe8Rot);
 
       var r09 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
       var rot9 = multiplyHelper(r09, rotateX);
       var rot_9 = multiplyHelper(rot9, gettransMatrix(0.4,0,0.5));
       var toe9Rot = multiplyHelper(rot_9, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe9.setMatrix(toe9Rot);
 
       var r10 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
       var rot10 = multiplyHelper(r10, rotateX);
       var rot_10 = multiplyHelper(rot10, gettransMatrix(0.8,0,0.5));
       var toe10Rot = multiplyHelper(rot_10, frontToescal);
-      // var r01 = getRotToe(0.8,0,1.5,rotateX, r2,frontToeScal);
       frontToe10.setMatrix(toe10Rot);
 
       break;
@@ -1465,7 +1439,9 @@ function updateBody() {
       if(count % 3 === 1){
         dg = p;
       }else if(count % 3 === 2){
-        dg = -p;
+        dg = -2*p;
+      }else{
+        p = 0;
       }
 
       var rotateX = getRotMatrix(-dg,"x"); 
@@ -1638,9 +1614,6 @@ function updateBody() {
       var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
       var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
       nose.setMatrix(noseRot2);
-
-      // noseSmallURRotMatrix=multiplyHelper(torsoRot,noseSmallURMatrix);
-      // noseSmallUR.setMatrix(noseSmallURRotMatrix); 
 
 
       var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
