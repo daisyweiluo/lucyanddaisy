@@ -11,7 +11,7 @@ THREE.Object3D.prototype.setMatrix = function(a) {
 var canvas = document.getElementById('canvas');
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xC7F49F); // white background colour
+renderer.setClearColor(0xB7612C); // white background colour
 canvas.appendChild(renderer.domElement);
 
 // SETUP CAMERA
@@ -59,7 +59,8 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 
 // MATERIALS
 // Note: Feel free to be creative with this! 
-var normalMaterial = new THREE.MeshNormalMaterial();
+//var normalMaterial = new THREE.MeshNormalMaterial( {color: 0xB7612C, transparent: true, blending: THREE.AdditiveBlending });
+var normalMaterial = new THREE.MeshNormalMaterial(  { color: 0xffaa00, wireframe: true });
 
 // function drawCube()
 // Draws a unit cube centered about the origin.
@@ -701,7 +702,7 @@ function init_animation(p_start,p_end,t_length){
   return;
 }
 
-var count = 0;
+var counter = 0;
 
 function updateBody() {
   switch(true)
@@ -1432,19 +1433,10 @@ function updateBody() {
         break;
       }
 
-      p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
+      p= (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
-      // count++;
-      var dg;
-      if(count % 3 === 1){
-        dg = p;
-      }else if(count % 3 === 2){
-        dg = -2*p;
-      }else{
-        p = 0;
-      }
 
-      var rotateX = getRotMatrix(-dg,"x"); 
+      var rotateX = getRotMatrix(-p,"x"); 
 
       //FRONT LEFT LEG AND BACK RIGHT LEG
       var r1 = multiplyHelper(frontLtransMatrix, gettransMatrix(-1,1,-1));
@@ -1520,7 +1512,7 @@ function updateBody() {
       backToe10.setMatrix(backtoe10_2);
 
       // FRONT RIGHT LEG AND BACK LEFT LEG
-      var rotateY = getRotMatrix(dg,"x"); 
+      var rotateY = getRotMatrix(p,"x"); 
       var r1_R = multiplyHelper(frontRtransMatrix, gettransMatrix(-1,1,-1));
       var r2_R = multiplyHelper(r1_R, rotateY);
       var r3_R = multiplyHelper(r2_R, gettransMatrix(1,-1,1));
@@ -1597,13 +1589,12 @@ function updateBody() {
 
 
       //head and nose swim
-        var pp=dg;
-    
-      var rotateY = getRotMatrix(pp,"y"); 
-      var rotateD = getRotMatrix(2*p,"x");
-      var rotateU = getRotMatrix(-2*p,"x");
-      var rotateL = getRotMatrix(2*p,"y"); 
-      var rotateR = getRotMatrix(-2*p,"y"); 
+
+      var rotateY = getRotMatrix(p,"y"); 
+      var rotateD = getRotMatrix(-p,"x");
+      var rotateU = getRotMatrix(p,"x");
+      var rotateL = getRotMatrix(-p,"y"); 
+      var rotateR = getRotMatrix(p,"y"); 
 
       var headorigin = multiplyHelper(headMatrix, gettransMatrix(0,0,-3));
       var headRotMatrix = multiplyHelper(headorigin, rotateY);
@@ -1616,11 +1607,11 @@ function updateBody() {
       nose.setMatrix(noseRot2);
 
 
+     //if (p0 === 0){
       var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
       var test = multiplyHelper(noseSmallURRot1, rotateD);
       var noseSmallURRot2 = multiplyHelper(test, noseSmallscalMatrix);
       noseSmallUR.setMatrix(noseSmallURRot2);
-
 
       var noseSmallULRot1 = multiplyHelper(noseRot1, gettransMatrix(-0.5,1.5,0.75));
       var test = multiplyHelper(noseSmallULRot1, rotateD);
@@ -1656,6 +1647,13 @@ function updateBody() {
         bigtentr[index-1].setMatrix(tentrRot2);
       }
 
+      var rotateY = getRotMatrix(p/5,"y"); 
+      for(var index = 0; index < tails.length; index++){
+      var tail1 = multiplyHelper(tailMatrixs[index], gettransMatrix(0,0,-(ip[index]+3.78)));
+      var tail2 = multiplyHelper(rotateY,tail1);
+      var tail3= multiplyHelper(tail2, gettransMatrix(0,0,(ip[index]+3.78)));
+      tails[index].setMatrix(tail3);
+}
       break;
 
     default:
@@ -1719,22 +1717,6 @@ function getRotToe(x,y,z,m1,r1,m2){
       return toe1Rot;
 }
 
-// function BacktoOrigin(m1){
-//   var m2 = multiplyHelper(m1, new THREE.Matrix4().set(0,0,0,1));
-//   var m3 = getInversePosition(m2);
-//   return m3;
-// }
-
-// function getInversePosition(m1){
-//   var m2 = multiplyHelper(m1, new THREE.Matrix4().set(-1,0,0,0));
-//   var m3 = multiplyHelper(m1, new THREE.Matrix4().set(0,-1,0,0));
-//   var m4 = multiplyHelper(m1, new THREE.Matrix4().set(0,0,-1,0));
-//   var m5 = multiplyHelper(m1, new THREE.Matrix4().set(0,0,0,-1));
-//   var obj = new THREE.Matrix4().set(1,0,0,m2, 0,1,0,m3, 0,0,1,m4, 0,0,0,m5);
-//   return obj;
-// }
-
-
 
 // LISTEN TO KEYBOARD
 // Hint: Pay careful attention to how the keys already specified work!
@@ -1781,8 +1763,10 @@ keyboard.domElement.addEventListener('keydown',function(event){
       (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "D")}  
 
       else if(keyboard.eventMatches(event,"S")){ 
-        count++;
-      (key == "S")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "S")}  
+        counter++;
+      ((key == "S") && (counter !== 1) )? (((key == "S") && (counter === 2) )?init_animation(p1,-p1,time_length):(init_animation(p1,0,time_length),counter = 0)) : (init_animation(0,Math.PI/4,1), key = "S")
+    }  
+
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
   // Note: Remember spacebar sets jumpcut/animate! 
