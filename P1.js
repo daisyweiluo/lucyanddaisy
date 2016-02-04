@@ -1460,11 +1460,12 @@ function updateBody() {
 
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame  
 
-      count++;
+      // count++;
+      var dg;
       if(count % 3 === 1){
-        var dg = p;
+        dg = p;
       }else if(count % 3 === 2){
-        var dg = -p;
+        dg = -p;
       }
 
       var rotateX = getRotMatrix(-dg,"x"); 
@@ -1621,9 +1622,7 @@ function updateBody() {
 
 
       //head and nose swim
-     
         var pp=dg;
-    
     
       var rotateY = getRotMatrix(pp,"y"); 
       var rotateD = getRotMatrix(2*p,"x");
@@ -1810,6 +1809,7 @@ keyboard.domElement.addEventListener('keydown',function(event){
       (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "D")}  
 
       else if(keyboard.eventMatches(event,"S")){ 
+        count++;
       (key == "S")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "S")}  
 
   // TO-DO: BIND KEYS TO YOUR JUMP CUTS AND ANIMATIONS
