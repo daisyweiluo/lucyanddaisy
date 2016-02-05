@@ -17,7 +17,7 @@ canvas.appendChild(renderer.domElement);
 // SETUP CAMERA
 var camera = new THREE.PerspectiveCamera(30,1,0.1,1000); // view angle, aspect ratio, near, far
 camera.position.set(45,20,40);
-camera.lookAt(scene.position);
+//camera.lookAt(scene.position);
 scene.add(camera);
 
 // SETUP ORBIT CONTROLS OF THE CAMERA
@@ -1965,10 +1965,17 @@ keyboard.domElement.addEventListener('keydown',function(event){
 // SETUP UPDATE CALL-BACK
 // Hint: It is useful to understand what is being updated here, the effect, and why.
 function update() {
+  
+        var timer = 0.0001 * Date.now();
+        camera.position.x = Math.cos( timer ) * 70;
+        camera.position.z = Math.sin( timer ) * 70;
+        camera.lookAt( scene.position );
+
   updateBody();
 
   requestAnimationFrame(update);
   renderer.render(scene,camera);
 }
+
 
 update();
