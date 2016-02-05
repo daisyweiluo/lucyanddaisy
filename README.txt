@@ -1,5 +1,5 @@
 name: Luxi Xu; Student number: 32479115; cs id: z4j8;
-name: Daisy Luo; Student number: ; cs id: ;
+name: Wei Luo; Student number: 51129120; cs id: c5n8;
 
  By submitting this file, I hereby declare that I (or our team of two) worked individually on this assignment
 and wrote all of this code. I/we have listed all external resoures (web pages, books) used below. I/we have
@@ -10,9 +10,9 @@ We implemented the following:
 2."E" - Body tilt down while the back legs stay still.
 3. "H" - The head with the nose and tentacles will rotate to the right, pivoting the joint connecting the head and the body.
 4."G" - See above except rotating to the left
-5."T" - Tails will rotae to the right; We purposely set the pivoting point to the inner of the body because the back body of our mole is curved.
+5."T" - Tails will rotate to the right; We purposely set the pivoting point to the inner of the body because the back body of our mole is curved.
 6."V" - See above except rotating to the right.
-7."N" - xxx
+7."N" - The 22 nose tentacles will move radially forrwards together(fans). When clicking again, move to the original gesture.
 8. "S" - First clik on "S" will make
 (1) the front left leg and the back right leg rotate forwards
 (2) head  moves to the right
