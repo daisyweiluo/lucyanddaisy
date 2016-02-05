@@ -11,7 +11,7 @@ THREE.Object3D.prototype.setMatrix = function(a) {
 var canvas = document.getElementById('canvas');
 var scene = new THREE.Scene();
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor(0xB7612C); // white background colour
+renderer.setClearColor(0xFC9E55); // white background colour
 canvas.appendChild(renderer.domElement);
 
 // SETUP CAMERA
