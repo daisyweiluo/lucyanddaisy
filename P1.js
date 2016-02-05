@@ -60,7 +60,8 @@ var grid = new THREE.Line(gridGeometry,gridMaterial,THREE.LinePieces);
 // MATERIALS
 // Note: Feel free to be creative with this! 
 //var normalMaterial = new THREE.MeshNormalMaterial( {color: 0xB7612C, transparent: true, blending: THREE.AdditiveBlending });
-var normalMaterial = new THREE.MeshNormalMaterial(  { color: 0xffaa00, wireframe: true });
+var normalMaterial = new THREE.MeshNormalMaterial(  { shading: THREE.SmoothShading });
+//{ shading: THREE.SmoothShading }
 
 // function drawCube()
 // Draws a unit cube centered about the origin.
