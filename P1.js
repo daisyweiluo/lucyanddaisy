@@ -128,12 +128,15 @@ var toeMatrix = getscaleMatrix(0.1,0.1,0.1);
 var torsotrans = multiplyHelper(torsoMatrix, gettransMatrix(0,0,-2.3));
 
 //HEADS
+//HEAD Matrix having scale matrix
 var headMatrix = multiplyHelper(torsoMatrix, headtransMatrix);
 var headscal = getscaleMatrix(0.7,0.7,0.7);
 var head_Matrix = multiplyHelper(headMatrix, headscal);
 
 //LEGS THIGHS
 //******* BACK MAIN LEG MATRIX **********
+//parts are inheritance
+//so it's easy to do all the movements
 var LlegtransMatrix = multiplyHelper(torsoMatrix, backLlegMatrix);
 var RlegtransMatrix = multiplyHelper(torsoMatrix, backRlegMatrix);
 //*********************************
@@ -144,6 +147,8 @@ var LlegMatrix = multiplyHelper(LlegtransMatrix,legscalMatrix);
 var RlegMatrix = multiplyHelper(RlegtransMatrix,legscalMatrix);
 
 //SMALL LEGS( children of LEGS THIGHS)
+//parts are inheritance
+//so it's easy to do all the movements
 var LsmllegtransMatrix = multiplyHelper(LlegtransMatrix, gettransMatrix(-0.2,-1.5,0));
 var RsmllegtransMatrix = multiplyHelper(RlegtransMatrix, gettransMatrix(0.2,-1.5,0));
 var smllegscalMatrix = getscaleMatrix(0.2,0.3,0.3);
@@ -152,6 +157,8 @@ var LsmllegMatrix = multiplyHelper(LsmllegtransMatrix,smllegscalMatrix);
 var RsmllegMatrix = multiplyHelper(RsmllegtransMatrix,smllegscalMatrix);
 
 //LOWER SMALL LEGS (children of LEGS THIGHS)
+//parts are inheritance
+//so it's easy to do all the movements
  var LlowerlegtransMatrix = multiplyHelper(LlegtransMatrix, gettransMatrix(-0.2,-2.2,0));
  var RlowerlegtransMatrix = multiplyHelper(RlegtransMatrix, gettransMatrix(0.2,-2.2,0));
  var lowerlegscalMatrix = getscaleMatrix(0.1,0.35,0.1);
@@ -162,6 +169,8 @@ var RsmllegMatrix = multiplyHelper(RsmllegtransMatrix,smllegscalMatrix);
 
  //BACK PALM (children of LEGS THIGHS)
  // ****** MAIN BACK PALM MATRIX *****
+ //parts are inheritance
+//so it's easy to do all the movements
 var LpalmtransMtx = multiplyHelper(LlegtransMatrix, backLpalmMatrix);
 var RpalmtransMtx = multiplyHelper(RlegtransMatrix, backRpalmMatrix);
 //*********************************
@@ -171,6 +180,10 @@ var LpalmMtx = multiplyHelper(LpalmtransMtx,palmscalMtx);
 var RpalmMtx = multiplyHelper(RpalmtransMtx,palmscalMtx);
 
  //FIVE BACK  LEFT TOES(children of LEFT PALM)
+ //parts are inheritance
+//so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
  var backToe1trans = multiplyHelper(LpalmtransMtx, gettransMatrix(0.4,-0.1,1.5));
  var backToe2trans = multiplyHelper(LpalmtransMtx, gettransMatrix(0.2,-0.1,1.5));
  var backToe3trans = multiplyHelper(LpalmtransMtx, gettransMatrix(0,-0.1,1.5));
@@ -185,6 +198,9 @@ var RpalmMtx = multiplyHelper(RpalmtransMtx,palmscalMtx);
  var backToe5Matrix = multiplyHelper(backToe5trans, backToescal);
 
  //FIVE BACK RIGHT TOES(children of RIGHT PALM)
+ //so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
  var backToe6trans = multiplyHelper(RpalmtransMtx, gettransMatrix(-0.4,-0.1,1.5));
  var backToe7trans = multiplyHelper(RpalmtransMtx, gettransMatrix(-0.2,-0.1,1.5));
  var backToe8trans = multiplyHelper(RpalmtransMtx, gettransMatrix(0,-0.1,1.5));
@@ -201,6 +217,9 @@ var RpalmMtx = multiplyHelper(RpalmtransMtx,palmscalMtx);
 
 //FRONT THIGHS
 // ******** FRONT MAIN LEG MATRIX ***********
+//so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
 var frontLtransMatrix = multiplyHelper(torsoMatrix, frontLlegMatrix);
 var frontRtransMatrix = multiplyHelper(torsoMatrix, frontRlegMatrix);
 //*********************************************
@@ -214,6 +233,9 @@ var frontLLtransMatrix = multiplyHelper(frontLtransMatrix, gettransMatrix(0,-1,0
 var frontRLtransMatrix = multiplyHelper(frontRtransMatrix, gettransMatrix(0,-1,0));
 var frontLscalMatrix = getscaleMatrix(0.2,0.6,0.2);
 
+//so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
 var frontLLMatrix = multiplyHelper(frontLLtransMatrix,frontLscalMatrix);
 var frontRLMatrix = multiplyHelper(frontRLtransMatrix,frontLscalMatrix);
 
@@ -228,6 +250,9 @@ var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
 
 
  //FIVE FRONT LEFT TOES(children of PALM)
+ //so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
  var frontToe1trans = multiplyHelper(frontLpalmtransMtx, gettransMatrix(0.8,0,1.5));
  var frontToe2trans = multiplyHelper(frontLpalmtransMtx, gettransMatrix(0.4,0,1.5));
  var frontToe3trans = multiplyHelper(frontLpalmtransMtx, gettransMatrix(0,0,1.5));
@@ -237,6 +262,9 @@ var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
 
 
 // torsoMatrix.multiply(getscaleMatrix(2,2,2)); 
+//so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
  var frontToe1Matrix = multiplyHelper(frontToe1trans, frontToescal);
  var frontToe2Matrix = multiplyHelper(frontToe2trans, frontToescal);
  var frontToe3Matrix = multiplyHelper(frontToe3trans, frontToescal);
@@ -245,6 +273,9 @@ var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
 
 
  //FIVE FRONT RIGHT TOES
+ //so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
  var frontToe6trans = multiplyHelper(frontRpalmtransMtx, gettransMatrix(-0.8,0,1.5));
  var frontToe7trans = multiplyHelper(frontRpalmtransMtx, gettransMatrix(-0.4,0,1.5));
  var frontToe8trans = multiplyHelper(frontRpalmtransMtx, gettransMatrix(0,0,1.5));
@@ -259,12 +290,16 @@ var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
 
 
 //NOSE
+//so it's easy to do all the movements
 var nosetransMatrix = gettransMatrix(0,0,2);
 var nosescalMatrix =  getscaleMatrix(0.4,0.5,0.4);
 var nosematrix = multiplyHelper(headMatrix, nosetransMatrix);
 var noseMatrix=multiplyHelper(nosematrix,nosescalMatrix);
 
 //SMALL NOSE TENTACLES
+//so it's easy to do all the movements
+//each direction has a different trans
+//but the same scale matrix
 var noseSmallscalMatrix = getscaleMatrix(0.05,0.2,0.05);
 var noseSmallURtransMatrix = multiplyHelper(nosematrix,gettransMatrix(0,1.5,0.75));
 var noseSmallULtransMatrix = multiplyHelper(nosematrix,gettransMatrix(-0.5,1.5,0.75));
@@ -349,7 +384,7 @@ var frontToe9 = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontToe10 = new THREE.Mesh(torsoGeometry,normalMaterial);
 
 
-
+//set matrix for parts
 head.setMatrix(head_Matrix);
 torso.setMatrix(torsotrans);
 Lleg.setMatrix(LlegMatrix);
@@ -361,6 +396,7 @@ Rlowerleg.setMatrix(RlowerlegMatrix);
 Lpalm.setMatrix(LpalmMtx);
 Rpalm.setMatrix(RpalmMtx);
 
+//set matrix for parts
 frontLleg.setMatrix(frontLMatrix);
 frontRleg.setMatrix(frontRMatrix);
 
@@ -370,6 +406,7 @@ frontRLleg.setMatrix(frontRLMatrix);
 frontLpalm.setMatrix(frontLpalmMtx);
 frontRpalm.setMatrix(frontRpalmMtx);
 
+//set matrix for parts
 backToe1.setMatrix(backToe1Matrix);
 backToe2.setMatrix(backToe2Matrix);
 backToe3.setMatrix(backToe3Matrix);
@@ -400,6 +437,7 @@ noseSmallDR.setMatrix(noseSmallDRMatrix);
 noseSmallDL.setMatrix(noseSmallDLMatrix);
 
 //scene.add(torso);
+//scene add all the geometry
 scene.add(head);
 scene.add(Lleg);
 scene.add(Rleg);
@@ -419,7 +457,7 @@ scene.add(frontRLleg);
 scene.add(frontLpalm);
 scene.add(frontRpalm);
 
-
+//scene add all the geometry
 scene.add(nose);
 scene.add(noseSmallUR);
 scene.add(noseSmallUL);
@@ -437,6 +475,7 @@ scene.add(backToe8);
 scene.add(backToe9);
 scene.add(backToe10);
 
+//scene add all the geometry
 scene.add(frontToe1);
 scene.add(frontToe2);
 scene.add(frontToe3);
@@ -449,9 +488,13 @@ scene.add(frontToe9);
 scene.add(frontToe10);
 
 
+// reset function:
+// so in the middle of a movement, it's able to reset
 function resetFcn(){
   head.setMatrix(head_Matrix);
   torso.setMatrix(torsotrans);
+
+  //reset for leg
   Lleg.setMatrix(LlegMatrix);
   Rleg.setMatrix(RlegMatrix);
   Lsmlleg.setMatrix(LsmllegMatrix);
@@ -470,6 +513,7 @@ function resetFcn(){
   frontLpalm.setMatrix(frontLpalmMtx);
   frontRpalm.setMatrix(frontRpalmMtx);
 
+  //reset for toe
   backToe1.setMatrix(backToe1Matrix);
   backToe2.setMatrix(backToe2Matrix);
   backToe3.setMatrix(backToe3Matrix);
@@ -492,13 +536,14 @@ function resetFcn(){
   frontToe9.setMatrix(frontToe9Matrix);
   frontToe10.setMatrix(frontToe10Matrix);
 
-
+  //reset for nose
   nose.setMatrix(noseMatrix);
   noseSmallUR.setMatrix(noseSmallURMatrix);
   noseSmallUL.setMatrix(noseSmallULMatrix);
   noseSmallDR.setMatrix(noseSmallDRMatrix);
   noseSmallDL.setMatrix(noseSmallDLMatrix);
 
+  //reset for tentacles
   var i=0;
   var j=0;
   while (i < 9){
@@ -511,6 +556,7 @@ function resetFcn(){
     j++;
   }
 
+  //reset for body
   var bcount=0;
   while(bcount < body.length ){
       body[bcount].setMatrix(bodyMatrix[bcount]);
@@ -518,6 +564,7 @@ function resetFcn(){
       bcount++;
   }
 
+  //reset for tail
   var m=0;
   while(m < tails.length ){
       tails[m].setMatrix(tailMatrixs[m]);
@@ -529,6 +576,8 @@ function resetFcn(){
 
 
 //BACK BODY LOOP
+// have different trans and scale
+// store to array
 var bcount = 1;
 var origin = 4;
 var ScalBodyMatrixs = [];
@@ -542,6 +591,7 @@ var fTransBodyMatrixs = [];
 var fbodyMatrix = [];
 var fbody = [];
 
+// loop with 100
 while(bcount < 100 ){
   //back body
   var i = 1.4*(1-0.01*bcount);
@@ -564,6 +614,8 @@ while(bcount < 100 ){
   scene.add(LoopBody);
 
   //HEAD
+  // have different trans and scale
+// store to array
   var a = 1.4*(1-0.01*bcount);
   var b = 1.4*(1-0.01*bcount);
   var c = 1.4*(1-0.01*bcount);
@@ -588,6 +640,8 @@ while(bcount < 100 ){
 
 
 //TAIL
+// have different trans and scale
+// store to array
 var count = 1; 
 var initialpos = -3.78;
 var ScalTailMatrixs =[];
@@ -597,6 +651,7 @@ var tailMatrixs = [];
 //All the tail is stored here
 var tails = [];
 var ip = [];
+// loop of 90
 while (count <= 90){
   var n = 0.2*(1-0.01*count);
   var scalTailMatrix = new THREE.Matrix4().set(n,0,0,0, 
@@ -623,6 +678,8 @@ while (count <= 90){
 
 
 // Make tentacles
+// have different trans and scale
+// store to array
 var lcount = 1;
 var rcount = 1; 
 var bigtentlmatrix = [];
@@ -633,7 +690,7 @@ var bigtentl = [];
 var bigtentr = [];
 var scaltentMatrix = getscaleMatrix(0.8,0.03,0.05);
 
-
+// loop of 9
 while (lcount <= 9){
 
 var bigtentltmpmatrix= multiplyHelper(nosematrix,gettransMatrix(3,1.2-0.25*lcount,0.8));
@@ -649,6 +706,7 @@ scene.add(noseBigtentl);
 lcount++;
 }
 
+// loop of 9
 while (rcount <= 9){
 
 var bigtentrtmpmatrix= multiplyHelper(nosematrix,gettransMatrix(-3,1.2-0.25*rcount,0.8));
@@ -709,6 +767,10 @@ var wcounter = 0;
 function updateBody() {
   switch(true)
   {
+
+    // when you click on U
+    // everything moves up
+    // with all parts
       case(key == "U" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -752,6 +814,9 @@ function updateBody() {
       noseSmallDLRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallDLMatrix);
       noseSmallDL.setMatrix(noseSmallDLRotMatrix);       
       
+    // when you click on U
+    // everything moves up
+    // with all parts
       for(var index = 0; index < tails.length; index++){
         var tailRotMatrix = multiplyHelper(torsoRotMatrix,TransTailMatrixs[index]);
         var LoopTailRot = multiplyHelper(tailRotMatrix,ScalTailMatrixs[index]);
@@ -759,24 +824,28 @@ function updateBody() {
       }
       //rotations of body
 
-
+           // when you click on U
+           // everything moves up
+           // with all parts
       for(var index = 0; index < bigtentl.length; index++){
         var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentlMatrix[index]);
         bigtentl[index].setMatrix(BigtentRotMatrix);
       }
 
+      // loop for tentacles
       for(var index = 0; index < bigtentr.length; index++){
         var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentrMatrix[index]);
         bigtentr[index].setMatrix(BigtentRotMatrix);
       }
 
-
+      // loop for body
       for(var index = 0; index < body.length; index++){
         var bodyRotMatrix = multiplyHelper(torsoRotMatrix,TransBodyMatrixs[index]);
         var LoopBodyRot = multiplyHelper(bodyRotMatrix,ScalBodyMatrixs[index]);
         body[index].setMatrix(LoopBodyRot);
-
       }
+
+      // loop for body
         for(var index = 0; index < fbody.length; index++){
         var fbodyRotMatrix = multiplyHelper(torsoRotMatrix,fTransBodyMatrixs[index]);
         var fLoopBodyRot = multiplyHelper(fbodyRotMatrix,fScalBodyMatrixs[index]);
@@ -785,6 +854,9 @@ function updateBody() {
       }
 
       //rotation of front legs:
+      // when you click on U
+    // everything moves up
+    // with all parts
       var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
       frontLpalm.setMatrix(frontLpalmRotMatrix);
 
@@ -842,6 +914,10 @@ function updateBody() {
       // head2torso.setMatrix(head2torsoRotMatrix);
       break;
 
+
+          // when you click on E
+    // everything moves down
+    // with all parts
      case(key == "E" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -883,8 +959,13 @@ function updateBody() {
       noseSmallDR.setMatrix(noseSmallDRRotMatrix); 
 
       noseSmallDLRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallDLMatrix);
-      noseSmallDL.setMatrix(noseSmallDLRotMatrix);       
-      
+      noseSmallDL.setMatrix(noseSmallDLRotMatrix);   
+
+    // when you click on E
+    // everything moves down
+    // with all parts  
+
+    //loop for tail  
       for(var index = 0; index < tails.length; index++){
         var tailRotMatrix = multiplyHelper(torsoRotMatrix,TransTailMatrixs[index]);
         var LoopTailRot = multiplyHelper(tailRotMatrix,ScalTailMatrixs[index]);
@@ -892,6 +973,10 @@ function updateBody() {
       }
       //rotations of body
 
+          // when you click on E
+    // everything moves down
+    // with all parts
+    // loop for tentables
       for(var index = 0; index < bigtentl.length; index++){
         var BigtentRotMatrix = multiplyHelper(torsoRotMatrix,bigtentlMatrix[index]);
         bigtentl[index].setMatrix(BigtentRotMatrix);
@@ -902,6 +987,10 @@ function updateBody() {
         bigtentr[index].setMatrix(BigtentRotMatrix);
       }
 
+    // when you click on E
+    // everything moves down
+    // with all parts
+    // loop for body
       for(var index = 0; index < body.length; index++){
         var bodyRotMatrix = multiplyHelper(torsoRotMatrix,TransBodyMatrixs[index]);
         var LoopBodyRot = multiplyHelper(bodyRotMatrix,ScalBodyMatrixs[index]);
@@ -916,6 +1005,9 @@ function updateBody() {
       }
 
       //rotation of front legs:
+     // when you click on E
+    // everything moves down
+    // with all parts
       var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
       frontLpalm.setMatrix(frontLpalmRotMatrix);
 
@@ -978,6 +1070,8 @@ function updateBody() {
 
 
       // CLICK ON "P" WILL ROTATE THE TOE
+      // when you click on P
+    // toe rotates
       case(key == "P" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -997,6 +1091,8 @@ function updateBody() {
       frontLpalm.setMatrix(frontLpalmMtx);
 
       //rotation of left toes
+            // when you click on P
+    // toe rotates
       var r01 =  multiplyHelper(r2, gettransMatrix(0.8,0,1.5));
       frontToe1Matrix = multiplyHelper(r01, frontToescal);
       frontToe1.setMatrix(frontToe1Matrix);
@@ -1019,6 +1115,8 @@ function updateBody() {
 
       //BACK TOES
 
+      // when you click on P
+    // toe rotates
       var r3 = multiplyHelper(RpalmtransMtx,rotateX);
       RpalmMtx = multiplyHelper(r3,palmscalMtx);
       //torso.setMatrix(torsoRotMatrix); 
@@ -1049,7 +1147,8 @@ function updateBody() {
       break;
 
 
-
+      // when you click on I
+    // toe rotates down
       case(key == "I" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1069,6 +1168,8 @@ function updateBody() {
       frontRpalm.setMatrix(frontRpalmMtx);
 
       //rotation of left toes
+            // when you click on P
+    // toe rotates
       var r01 =  multiplyHelper(r4, gettransMatrix(0.8,0,1.5));
       frontToe6Matrix = multiplyHelper(r01, frontToescal);
       frontToe6.setMatrix(frontToe6Matrix);
@@ -1090,7 +1191,8 @@ function updateBody() {
       frontToe10.setMatrix(frontToe10Matrix);
 
       //BACK TOES
-
+      // when you click on P
+    // toe rotates
       var r5 = multiplyHelper(LpalmtransMtx,rotateY);
       LpalmMtx = multiplyHelper(r5,palmscalMtx);
       //torso.setMatrix(torsoRotMatrix); 
@@ -1120,6 +1222,10 @@ function updateBody() {
 
       break;
 
+
+      // when you click on N,
+      // nose fan out
+      // each each have different direction
       case(key == "N" && animate):
 
        var time = clock.getElapsedTime(); // t seconds passed since the clock started.
@@ -1138,6 +1244,9 @@ function updateBody() {
       var rotateD = getRotMatrix(2*p,"x");
       var rotateU = getRotMatrix(-2*p,"x");
 
+      // when you click on N,
+      // nose fan out
+      // each each have different direction
       for(var i = 0; i < bigtentl.length; i++){
          var tmp=multiplyHelper(bigtentlmatrix[i],gettransMatrix(-2,-1.2+0.25*lcount,-0.8));
         var tmp1=multiplyHelper(tmp,rotateY);
@@ -1146,6 +1255,9 @@ function updateBody() {
         bigtentl[i].setMatrix(tmp3);
       }
 
+      // when you click on N,
+      // nose fan out
+      // each each have different direction
       for(var i = 0; i < bigtentr.length; i++){
          var tmp=multiplyHelper(bigtentrmatrix[i],gettransMatrix(2,-1.2+0.25*lcount,-0.8));
         var tmp1=multiplyHelper(tmp,rotateL);
@@ -1154,6 +1266,9 @@ function updateBody() {
         bigtentr[i].setMatrix(tmp3);
       }
 
+      // when you click on N,
+      // nose fan out
+      // each each have different direction
         var tmp=multiplyHelper(noseSmallURtransMatrix,rotateD);
         var tmp1=multiplyHelper(tmp,noseSmallscalMatrix);    
         noseSmallUR.setMatrix(tmp1);
@@ -1172,6 +1287,11 @@ function updateBody() {
 
       break;
 
+
+      // when you click on H,
+      // head rotate
+      // with nose fan out
+      // each each have different direction
       case(key == "H" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1186,7 +1306,10 @@ function updateBody() {
       var rotateY = getRotMatrix(p,"y"); 
 
       //var headRot = multiplyHelper(torsoMatrix, rotateY);
-
+      // when you click on H,
+      // head rotate
+      // with nose fan out
+      // each each have different direction
       var headorigin = multiplyHelper(headMatrix, gettransMatrix(0,0,-3));
       var headRotMatrix = multiplyHelper(headorigin, rotateY);
       var BackheadRotMatrix = multiplyHelper(headRotMatrix, gettransMatrix(0,0,3));
@@ -1197,7 +1320,10 @@ function updateBody() {
       var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
       nose.setMatrix(noseRot2);
 
-
+      // when you click on H,
+      // head rotate
+      // with nose fan out
+      // each each have different direction
       var noseSmallURRot1 = multiplyHelper(noseRot1, gettransMatrix(0,1.5,0.75));
       var noseSmallURRot2 = multiplyHelper(noseSmallURRot1, noseSmallscalMatrix);
       noseSmallUR.setMatrix(noseSmallURRot2);
@@ -1215,6 +1341,10 @@ function updateBody() {
       var noseSmallDLRot2 = multiplyHelper(noseSmallDLRot1, noseSmallscalMatrix);
       noseSmallDL.setMatrix(noseSmallDLRot2); 
 
+      // when you click on H,
+      // head rotate
+      // with nose fan out
+      // each each have different direction
       for(var index = 1; index <= bigtentl.length; index++){
         var tentlRot1 = multiplyHelper(noseRot1,gettransMatrix(3,1.2-0.25*index,0.8));
         var tentlRot2 = multiplyHelper(tentlRot1, scaltentMatrix);
@@ -1233,6 +1363,10 @@ function updateBody() {
       break;
 
 
+      // when you click on H,
+      // head rotate
+      // with nose fan out
+      // each each have different direction
        case(key == "G" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1253,6 +1387,10 @@ function updateBody() {
       var headrot = multiplyHelper(BackheadRotMatrix, headscal);
       head.setMatrix(headrot);
 
+      // when you click on H,
+      // head rotate
+      // with nose fan out
+      // each each have different direction
       var noseRot1 = multiplyHelper(BackheadRotMatrix, nosetransMatrix);
       var noseRot2 = multiplyHelper(noseRot1, nosescalMatrix);
       nose.setMatrix(noseRot2);
@@ -1274,6 +1412,10 @@ function updateBody() {
       var noseSmallDLRot2 = multiplyHelper(noseSmallDLRot1, noseSmallscalMatrix);
       noseSmallDL.setMatrix(noseSmallDLRot2); 
 
+      // when you click on H,
+      // head rotate
+      // with nose fan out
+      // each each have different direction
       for(var index = 1; index <= bigtentl.length; index++){
         var tentlRot1 = multiplyHelper(noseRot1,gettransMatrix(3,1.2-0.25*index,0.8));
         var tentlRot2 = multiplyHelper(tentlRot1, scaltentMatrix);
@@ -1288,6 +1430,11 @@ function updateBody() {
       }
 
       break;
+
+
+      // when you click on T,
+      // tail move
+      // with other parts same
 
       case(key == "T" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
@@ -1311,6 +1458,10 @@ function updateBody() {
     }
       break;
 
+
+      // when you click on V,
+      // tail move
+      // with other parts same
       case(key == "V" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1335,6 +1486,9 @@ function updateBody() {
 
 
       //DIGGING
+       // when you click on D,
+      // toes move down
+      // with other parts same
       case(key == "D" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1355,6 +1509,10 @@ function updateBody() {
       frontLpalm.setMatrix(frontLpalmMtx);
 
       //rotation of left toes
+      //DIGGING
+       // when you click on D,
+      // toes move down
+      // with other parts same
       var r01 =  multiplyHelper(r2, gettransMatrix(0,0,1.5-0.5));
       var rot1 = multiplyHelper(r01, rotateX);
       var rot_1 = multiplyHelper(rot1, gettransMatrix(0.8,0,0.5));
@@ -1386,12 +1544,19 @@ function updateBody() {
       frontToe5.setMatrix(toe5Rot);
 
       //BACK TOES
-
+      //DIGGING
+       // when you click on D,
+      // toes move down
+      // with other parts same
       var r3 = multiplyHelper(frontRpalmtransMtx,rotateX);
       frontRpalmMtx = multiplyHelper(r3,frontpalmscalMtx);
       frontRpalm.setMatrix(frontRpalmMtx);
 
       //rotation of left toes
+      //DIGGING
+       // when you click on D,
+      // toes move down
+      // with other parts same
       var r06 =  multiplyHelper(r3, gettransMatrix(0,0,1.5-0.5));
       var rot6 = multiplyHelper(r06, rotateX);
       var rot_6 = multiplyHelper(rot6, gettransMatrix(-0.8,0,0.5));
@@ -1426,6 +1591,12 @@ function updateBody() {
       break;
 
       //SWIMMING
+      // combination all movements
+      // have a counter to have move 1,2 and 3
+      // head roate
+      // nose fan out
+      // dig
+      // tail move 
       case(key == "S" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1448,6 +1619,15 @@ function updateBody() {
     }
 
       //FRONT LEFT LEG AND BACK RIGHT LEG
+
+      //SWIMMING
+      // combination all movements
+      // have a counter to have move 1,2 and 3
+      // head roate
+      // nose fan out
+      // dig
+      // tail move
+      // counter == 1
       if(counter !== 2 && counter !== 0){
 
       var r1 = multiplyHelper(frontLtransMatrix, gettransMatrix(-1,1,-1));
@@ -1523,7 +1703,16 @@ function updateBody() {
       backToe10.setMatrix(backtoe10_2);
 
     }
-    
+
+
+      //SWIMMING
+      // combination all movements
+      // have a counter to have move 1,2 and 3
+      // head roate
+      // nose fan out
+      // dig
+      // tail move
+      // counter 0
       if(counter !== 1){
       // FRONT RIGHT LEG AND BACK LEFT LEG
       var r1_R = multiplyHelper(frontRtransMatrix, gettransMatrix(-1,1,-1));
@@ -1602,6 +1791,14 @@ function updateBody() {
 
       //head and nose swim
 
+      //SWIMMING
+      // combination all movements
+      // have a counter to have move 1,2 and 3
+      // head roate
+      // nose fan out
+      // dig
+      // tail move
+
       var rotateY = getRotMatrix(-p,"y"); 
       var rotateD = getRotMatrix(p,"x");
       var rotateU = getRotMatrix(-p,"x");
@@ -1670,6 +1867,9 @@ function updateBody() {
       break;
 
         //WALKING
+      // leg move up and down
+      // leg and toe move
+      // consistent
       case(key == "W" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1685,6 +1885,9 @@ function updateBody() {
       var rotateX = getRotMatrix(-p,"x"); 
 
       //FRONT LEFT LEG AND BACK RIGHT LEG
+            // leg move up and down
+      // leg and toe move
+      // consistent
       var r1 = multiplyHelper(frontLtransMatrix, gettransMatrix(-1,1,-1));
       var r2 = multiplyHelper(r1, rotateX);
       var r3 = multiplyHelper(r2, gettransMatrix(1,-1,1));
@@ -1758,7 +1961,9 @@ function updateBody() {
       backToe10.setMatrix(backtoe10_2);
 
       // FRONT RIGHT LEG AND BACK LEFT LEG
-     
+      // leg move up and down
+      // leg and toe move
+      // consistent     
       var rotateY = getRotMatrix(p,"x"); 
       var r1_R = multiplyHelper(frontRtransMatrix, gettransMatrix(-1,1,-1));
       var r2_R = multiplyHelper(r1_R, rotateY);
@@ -1795,6 +2000,9 @@ function updateBody() {
       frontToe10.setMatrix(fronttoe10_2);
 
 
+      // leg move up and down
+      // leg and toe move
+      // consistent
       var back_l1 = multiplyHelper(LlegtransMatrix, gettransMatrix(1,1,1));
       var back_l2 = multiplyHelper(back_l1, rotateY);
       var back_l3 = multiplyHelper(back_l2, gettransMatrix(-1,-1,-1));
@@ -1838,6 +2046,8 @@ function updateBody() {
   }
 }
 
+//helper function
+// easier to write rotation
 function getRotMatrix(p, str){
   switch(str)
   {case "x":
@@ -1872,21 +2082,29 @@ function getRotMatrix(p, str){
 
 }
 
+//helper function
+// easier to write scale
 function getscaleMatrix(x,y,z){
   var obj = new THREE.Matrix4().set(x,0,0,0, 0,y,0,0, 0,0,z,0, 0,0,0,1);
   return obj;
 }
 
+//helper function
+// easier to write translation
 function gettransMatrix(x,y,z){
   var obj = new THREE.Matrix4().set(1,0,0,x, 0,1,0,y, 0,0,1,z, 0,0,0,1);
   return obj;
 }
 
+//helper function
+// helper to do mutiplication
 function multiplyHelper(m1,m2){
   var obj = new THREE.Matrix4().multiplyMatrices(m1,m2);
   return obj;
 }
 
+//helper function
+// easier to get toe
 function getRotToe(x,y,z,m1,r1,m2){
       var r01 =  multiplyHelper(r1, gettransMatrix(x,y,z-0.5));
       var rot1 = multiplyHelper(r01, m1);
@@ -1911,40 +2129,54 @@ keyboard.domElement.addEventListener('keydown',function(event){
     camera.position.set(45,0,0);
     camera.lookAt(scene.position);}
 
+// click on keyboard P, change movements
   else if(keyboard.eventMatches(event,"P")){
     (key == "P")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "P")
   }
+
+// click on keyboard U, change movements
   else if(keyboard.eventMatches(event,"U")){ 
     (key == "U")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/4,1), key = "U")}  
 
+// click on keyboard I, change movements
       else if(keyboard.eventMatches(event,"I")){ 
     (key == "I")? init_animation(p1,p0,time_length) : (init_animation(0,Math.PI/9,1), key = "I")}  
 
+// click on keyboard E, change movements
       else if(keyboard.eventMatches(event,"E")){ 
     (key == "E")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "E")}  
 
+// click on keyboard N, change movements
       else if(keyboard.eventMatches(event,"N")){ 
     (key == "N")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/12,1), key = "N")}  
 
+// click on keyboard H, change movements
       else if(keyboard.eventMatches(event,"H")){ 
     (key == "H")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "H")}  
  
+// click on keyboard G, change movements
     else if(keyboard.eventMatches(event,"G")){ 
       (key == "G")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "G")}  
 
+// click on keyboard T, change movements
       else if(keyboard.eventMatches(event,"T")){ 
       (key == "T")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "T")}
                 else if(keyboard.eventMatches(event,"V")){ 
       (key == "V")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "V")} 
 
+// click on keyboard D, change movements
       else if(keyboard.eventMatches(event,"D")){ 
       (key == "D")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "D")}  
+
+// click on keyboard S, change movements
 
       else if(keyboard.eventMatches(event,"S")){ 
       counter++;
       ((key == "S") && (counter !== 1) )? (((key == "S") && (counter === 2) )?init_animation(p1,-p1,time_length):(init_animation(p1,0,time_length),counter = 0)) : (init_animation(0,Math.PI/4,1), key = "S")
     }  
 
+// click on keyboard W, change movements
+// have counter
       else if(keyboard.eventMatches(event,"W")){ 
       wcounter++;
       //(key == "W")? init_animation(p1,p0,time_length) : (init_animation(0,-Math.PI/9,1), key = "W")} 
