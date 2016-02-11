@@ -73,9 +73,7 @@ function makeCube() {
 
 // GEOMETRY
 var torsoGeometry = makeCube();
-
 var non_uniform_scale = new THREE.Matrix4().set(5,0,0,0, 0,5,0,0, 0,0,5,0, 0,0,0,1);
-
 torsoGeometry.applyMatrix(non_uniform_scale);
 
 // TO-DO: SPECIFY THE REST OF YOUR STAR-NOSE MOLE'S GEOMETRY. 
@@ -92,7 +90,7 @@ torsoGeometry.applyMatrix(non_uniform_scale);
 // var ANGLE = 45.0;
 // var dg = Math.PI * ANGLE / 180.0; 
 
-// ALL THE MAIN JOINT MATRIX : Change the matrix below will revoke animations!!!
+// ALL THE MAIN JOINT MATRIX 
 //************************
 var torsoMatrix = getscaleMatrix(1,1,1);  // b
 
@@ -113,17 +111,6 @@ var headtransMatrix = gettransMatrix(0,0,16);
 var toeMatrix = getscaleMatrix(0.1,0.1,0.1);
 //************************
 
-//getscalMatrix
-
-
-// var transMatrix = gettransMatrix(0,0,9);
-// var rotMatrix = getRotMatrix(dg,"x");
-// var transtorsoMatrix = multiplyHelper(torsoMatrix, transMatrix);
-// var RotatedtorsoMatrix = multiplyHelper(transtorsoMatrix, rotMatrix);
-//var transRotatedtorsoMatrix = multiplyHelper(RotatedtorsoMatrix, transMatrix);
-
-
-
 // TORSO TESTING
 var torsotrans = multiplyHelper(torsoMatrix, gettransMatrix(0,0,-2.3));
 
@@ -133,30 +120,31 @@ var headMatrix = multiplyHelper(torsoMatrix, headtransMatrix);
 var headscal = getscaleMatrix(0.7,0.7,0.7);
 var head_Matrix = multiplyHelper(headMatrix, headscal);
 
-//LEGS THIGHS
+//BACK LEGS THIGHS
 //******* BACK MAIN LEG MATRIX **********
 //parts are inheritance
 //so it's easy to do all the movements
 var LlegtransMatrix = multiplyHelper(torsoMatrix, backLlegMatrix);
 var RlegtransMatrix = multiplyHelper(torsoMatrix, backRlegMatrix);
 //*********************************
-
+//scale matrix for legs
 var legscalMatrix = getscaleMatrix(0.3,0.5,0.5);
 
 var LlegMatrix = multiplyHelper(LlegtransMatrix,legscalMatrix);
 var RlegMatrix = multiplyHelper(RlegtransMatrix,legscalMatrix);
 
-//SMALL LEGS( children of LEGS THIGHS)
+//BACK SMALL LEGS( children of LEGS THIGHS)
 //parts are inheritance
 //so it's easy to do all the movements
 var LsmllegtransMatrix = multiplyHelper(LlegtransMatrix, gettransMatrix(-0.2,-1.5,0));
 var RsmllegtransMatrix = multiplyHelper(RlegtransMatrix, gettransMatrix(0.2,-1.5,0));
+//scale matrix for back small legs
 var smllegscalMatrix = getscaleMatrix(0.2,0.3,0.3);
 
 var LsmllegMatrix = multiplyHelper(LsmllegtransMatrix,smllegscalMatrix);
 var RsmllegMatrix = multiplyHelper(RsmllegtransMatrix,smllegscalMatrix);
 
-//LOWER SMALL LEGS (children of LEGS THIGHS)
+//BACK LOWER SMALL LEGS (children of BACK LEGS THIGHS)
 //parts are inheritance
 //so it's easy to do all the movements
  var LlowerlegtransMatrix = multiplyHelper(LlegtransMatrix, gettransMatrix(-0.2,-2.2,0));
@@ -167,19 +155,19 @@ var RsmllegMatrix = multiplyHelper(RsmllegtransMatrix,smllegscalMatrix);
  var RlowerlegMatrix = multiplyHelper(RlowerlegtransMatrix,lowerlegscalMatrix);
 
 
- //BACK PALM (children of LEGS THIGHS)
+ //BACK PAW (children of LEGS THIGHS)
  // ****** MAIN BACK PALM MATRIX *****
  //parts are inheritance
 //so it's easy to do all the movements
 var LpalmtransMtx = multiplyHelper(LlegtransMatrix, backLpalmMatrix);
 var RpalmtransMtx = multiplyHelper(RlegtransMatrix, backRpalmMatrix);
 //*********************************
-
+//scale matrix for back paw
 var palmscalMtx = getscaleMatrix(0.2,0.1,0.5);
 var LpalmMtx = multiplyHelper(LpalmtransMtx,palmscalMtx);
 var RpalmMtx = multiplyHelper(RpalmtransMtx,palmscalMtx);
 
- //FIVE BACK  LEFT TOES(children of LEFT PALM)
+ //FIVE BACK  LEFT TOES(children of LEFT PAW)
  //parts are inheritance
 //so it's easy to do all the movements
 //each direction has a different trans
@@ -189,6 +177,7 @@ var RpalmMtx = multiplyHelper(RpalmtransMtx,palmscalMtx);
  var backToe3trans = multiplyHelper(LpalmtransMtx, gettransMatrix(0,-0.1,1.5));
  var backToe4trans = multiplyHelper(LpalmtransMtx, gettransMatrix(-0.2,-0.1,1.5));
  var backToe5trans = multiplyHelper(LpalmtransMtx, gettransMatrix(-0.4,-0.1,1.5));
+ //scale matrix for back toes
  var backToescal = getscaleMatrix(0.03,0.03,0.2);
 
  var backToe1Matrix = multiplyHelper(backToe1trans, backToescal);
@@ -239,8 +228,8 @@ var frontLscalMatrix = getscaleMatrix(0.2,0.6,0.2);
 var frontLLMatrix = multiplyHelper(frontLLtransMatrix,frontLscalMatrix);
 var frontRLMatrix = multiplyHelper(frontRLtransMatrix,frontLscalMatrix);
 
-//FRONT PALM(children of FRONT THIGHS)
-//***** FRONT PALM MATRIZ *********
+//FRONT PAW(children of FRONT THIGHS)
+//***** FRONT PAW MATRIZ *********
 var frontLpalmtransMtx = multiplyHelper(frontLtransMatrix, frontLpalmMatrix);
 var frontRpalmtransMtx = multiplyHelper(frontRtransMatrix, frontRpalmMatrix);
 //*********************************
@@ -249,7 +238,7 @@ var frontLpalmMtx = multiplyHelper(frontLpalmtransMtx,frontpalmscalMtx);
 var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
 
 
- //FIVE FRONT LEFT TOES(children of PALM)
+ //FIVE FRONT LEFT TOES(children of FRONT PAW)
  //so it's easy to do all the movements
 //each direction has a different trans
 //but the same scale matrix
@@ -258,6 +247,7 @@ var frontRpalmMtx = multiplyHelper(frontRpalmtransMtx,frontpalmscalMtx);
  var frontToe3trans = multiplyHelper(frontLpalmtransMtx, gettransMatrix(0,0,1.5));
  var frontToe4trans = multiplyHelper(frontLpalmtransMtx, gettransMatrix(-0.4,0,1.5));
  var frontToe5trans = multiplyHelper(frontLpalmtransMtx, gettransMatrix(-0.8,0,1.5));
+ //scale matrix for front toe
  var frontToescal = getscaleMatrix(0.07,0.03,0.4);
 
 
@@ -321,19 +311,19 @@ var torso = new THREE.Mesh(torsoGeometry,normalMaterial);
 
 //HEAD
 var head = new THREE.Mesh(torsoGeometry,normalMaterial);
-//LEGS
+//BACK LEGS
 var Lleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var Rleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
-//SMALL LEGS
+//BACK SMALL LEGS
 var Lsmlleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var Rsmlleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
-//LOWER LEGS
+//BACK LOWER LEGS
 var Llowerleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var Rlowerleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
- //PALM
+ //BACK PAW
 var Lpalm = new THREE.Mesh(torsoGeometry,normalMaterial);
 var Rpalm = new THREE.Mesh(torsoGeometry,normalMaterial);
 
@@ -345,8 +335,7 @@ var frontRleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontLLleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontRLleg = new THREE.Mesh(torsoGeometry,normalMaterial);
 
-
- //PALM
+ //FRONT PALM
 var frontLpalm = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontRpalm = new THREE.Mesh(torsoGeometry,normalMaterial);
 
@@ -371,7 +360,7 @@ var backToe8 = new THREE.Mesh(torsoGeometry,normalMaterial);
 var backToe9 = new THREE.Mesh(torsoGeometry,normalMaterial);
 var backToe10 = new THREE.Mesh(torsoGeometry,normalMaterial);
 
-//BACK TOES
+//FRONT TOES
 var frontToe1 = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontToe2 = new THREE.Mesh(torsoGeometry,normalMaterial);
 var frontToe3 = new THREE.Mesh(torsoGeometry,normalMaterial);
@@ -782,13 +771,11 @@ function updateBody() {
 
       p = (p1 - p0)*((time-time_start)/time_length) + p0; // current frame 
 
-     //rotation:
+     //rotation matrix:
       var rotateZ = getRotMatrix(p,"x");
       var torsoRotMatrix = multiplyHelper(torsoMatrix,rotateZ);
 
-      // var torsoTransMatrix = multiplyHelper(torsoRotMatrix, transMatrix);
-      // var RotatedtorsoRotMatrix = multiplyHelper(torsoTransMatrix,rotMatrix);
-
+      //other body part building up upon rotation matrix
       var headRotMatrix = multiplyHelper(torsoRotMatrix, head_Matrix);
       head.setMatrix(headRotMatrix);
       
@@ -797,12 +784,6 @@ function updateBody() {
 
       noseSmallURRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallURMatrix);
       noseSmallUR.setMatrix(noseSmallURRotMatrix); 
-
-      //noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
-      //noseSmallUL.setMatrix(noseSmallULRotMatrix); 
-
-      //var rotateY = getRotMatrix(p,"z");
-      // var torsoRotMatrixY = multiplyHelper(torsoMatrix,rotateY);
 
       noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
       noseSmallUL.setMatrix(noseSmallULRotMatrix); 
@@ -855,8 +836,8 @@ function updateBody() {
 
       //rotation of front legs:
       // when you click on U
-    // everything moves up
-    // with all parts
+      // everything moves up
+      // with all parts
       var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
       frontLpalm.setMatrix(frontLpalmRotMatrix);
 
@@ -874,7 +855,6 @@ function updateBody() {
 
       var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
       frontLpalm.setMatrix(frontLpalmRotMatrix);
-      //Lpalm.push(rotateZ);
 
       var frontRpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontRpalmMtx);
       frontRpalm.setMatrix(frontRpalmRotMatrix);
@@ -908,14 +888,11 @@ function updateBody() {
 
       var frontToe10RotMatrix = multiplyHelper(torsoRotMatrix, frontToe10Matrix);
       frontToe10.setMatrix(frontToe10RotMatrix);
-      // var head2torsoRotMatrix = multiplyHelper(torsoRotMatrix,head2torsoMatrix);
 
-      // torso.setMatrix(RotatedtorsoRotMatrix); 
-      // head2torso.setMatrix(head2torsoRotMatrix);
       break;
 
 
-          // when you click on E
+    // when you click on E
     // everything moves down
     // with all parts
      case(key == "E" && animate):
@@ -933,9 +910,6 @@ function updateBody() {
       var rotateZ = getRotMatrix(p,"x");
       var torsoRotMatrix = multiplyHelper(torsoMatrix,rotateZ);
 
-      // var torsoTransMatrix = multiplyHelper(torsoRotMatrix, transMatrix);
-      // var RotatedtorsoRotMatrix = multiplyHelper(torsoTransMatrix,rotMatrix);
-
       var headRotMatrix = multiplyHelper(torsoRotMatrix, head_Matrix);
       head.setMatrix(headRotMatrix);
       
@@ -944,12 +918,6 @@ function updateBody() {
 
       noseSmallURRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallURMatrix);
       noseSmallUR.setMatrix(noseSmallURRotMatrix); 
-
-      //noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
-      //noseSmallUL.setMatrix(noseSmallULRotMatrix); 
-
-      //var rotateY = getRotMatrix(p,"z");
-      // var torsoRotMatrixY = multiplyHelper(torsoMatrix,rotateY);
 
       noseSmallULRotMatrix=multiplyHelper(torsoRotMatrix,noseSmallULMatrix);
       noseSmallUL.setMatrix(noseSmallULRotMatrix); 
@@ -973,7 +941,7 @@ function updateBody() {
       }
       //rotations of body
 
-          // when you click on E
+    // when you click on E
     // everything moves down
     // with all parts
     // loop for tentables
@@ -1005,9 +973,9 @@ function updateBody() {
       }
 
       //rotation of front legs:
-     // when you click on E
-    // everything moves down
-    // with all parts
+      // when you click on E
+      // everything moves down
+      // with all parts
       var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
       frontLpalm.setMatrix(frontLpalmRotMatrix);
 
@@ -1025,7 +993,6 @@ function updateBody() {
 
       var frontLpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontLpalmMtx);
       frontLpalm.setMatrix(frontLpalmRotMatrix);
-      //Lpalm.push(rotateZ);
 
       var frontRpalmRotMatrix = multiplyHelper(torsoRotMatrix, frontRpalmMtx);
       frontRpalm.setMatrix(frontRpalmRotMatrix);
@@ -1059,10 +1026,6 @@ function updateBody() {
 
       var frontToe10RotMatrix = multiplyHelper(torsoRotMatrix, frontToe10Matrix);
       frontToe10.setMatrix(frontToe10RotMatrix);
-      // var head2torsoRotMatrix = multiplyHelper(torsoRotMatrix,head2torsoMatrix);
-
-      // torso.setMatrix(RotatedtorsoRotMatrix); 
-      // head2torso.setMatrix(head2torsoRotMatrix);
       break;
 
       // TO-DO: IMPLEMENT JUMPCUT/ANIMATION FOR EACH KEY!
@@ -1071,7 +1034,7 @@ function updateBody() {
 
       // CLICK ON "P" WILL ROTATE THE TOE
       // when you click on P
-    // toe rotates
+      // toe rotates
       case(key == "P" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1092,7 +1055,7 @@ function updateBody() {
 
       //rotation of left toes
             // when you click on P
-    // toe rotates
+      // toe rotates
       var r01 =  multiplyHelper(r2, gettransMatrix(0.8,0,1.5));
       frontToe1Matrix = multiplyHelper(r01, frontToescal);
       frontToe1.setMatrix(frontToe1Matrix);
@@ -1148,7 +1111,7 @@ function updateBody() {
 
 
       // when you click on I
-    // toe rotates down
+      // toe rotates down
       case(key == "I" && animate):
       var time = clock.getElapsedTime(); // t seconds passed since the clock started.
 
@@ -1169,7 +1132,7 @@ function updateBody() {
 
       //rotation of left toes
             // when you click on P
-    // toe rotates
+      // toe rotates
       var r01 =  multiplyHelper(r4, gettransMatrix(0.8,0,1.5));
       frontToe6Matrix = multiplyHelper(r01, frontToescal);
       frontToe6.setMatrix(frontToe6Matrix);
@@ -1192,7 +1155,7 @@ function updateBody() {
 
       //BACK TOES
       // when you click on P
-    // toe rotates
+      // toe rotates
       var r5 = multiplyHelper(LpalmtransMtx,rotateY);
       LpalmMtx = multiplyHelper(r5,palmscalMtx);
       //torso.setMatrix(torsoRotMatrix); 
@@ -2198,6 +2161,7 @@ keyboard.domElement.addEventListener('keydown',function(event){
 // Hint: It is useful to understand what is being updated here, the effect, and why.
 function update() {
   
+        //Camera rotation with 0.0001 adjusting speed
         var timer = 0.0001 * Date.now();
         camera.position.x = Math.cos( timer ) * 70;
         camera.position.z = Math.sin( timer ) * 70;
